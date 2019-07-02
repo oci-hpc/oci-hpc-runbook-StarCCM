@@ -16,6 +16,7 @@ The architecture for this runbook is as follow, we have one main machine (The he
 
 # Deployment via web console
 There are multiple options available to get started with STAR-CCM+ on OCI. The next 2 sections will show how to do it from the console in a webbrowser and using a Terraform script. Scripts are especially usefull with more complex architecture. For STARCCM+, 2 architectures are interesting. 
+
 ** Single HPC node
 ** Cluster with multiple compute nodes
 
@@ -129,7 +130,7 @@ On the next page, select <img src="https://github.com/oci-hpc/oci-hpc-runbook-sh
 On the next page, select the following:
 * Name of your instance
 * Availibility Domain: Each region has multiple availability domain. Some instance shapes are only available in certain AD.
-* Change the image source to CentOS 7.
+* Change the image source to Oracle Linux 7.6
 * Instance Type: Select Bare metal
 * Instance Shape: 
   * BM.HPC2.36
@@ -164,7 +165,7 @@ HPC machines have local NVMe storage but it is not mounted by default. Let's tak
 After logging in using ssh, run the command `lsblk`. 
 The drive should be listed with the NAME on the left (Probably nvme0n1, if it is different, change it in the next commands)
 
-The headnode will have the shared drive with the installation and the model. This will be shared between all the different compute nodes. Each compute node will also mount the drive to be running locally on a NVMe drive.  
+The headnode will have the shared drive with the installation and the model. This will be shared between all the different compute nodes. Each compute node will also mount the drive to be running locally on a NVMe drive. In this example the share directory will be 500 GB but feel free to change that.  
 
 If your headnode is also a compute node, you can partition the drive. 
 
@@ -310,72 +311,20 @@ terraform destroy
 ```
 
 # Installation
-This guide will show the different steps for the CentOS 7 image available on Oracle Cloud Infrastructure. 
-## Installing AEDT
-There are a couple of library that need to be added to the CentOS image. 
+This guide will show the different steps for the Oracle Linux 7.6 image available on Oracle Cloud Infrastructure. 
+## Installing STAR-CCM+
+There are a couple of library that need to be added to the Oracle Linux image on the headnode and the compute nodes.
 
-```sudo yum -y install mesa-libGLU-devel mesa-libGL-devel libXp mesa-dri-drivers libXmu libXft giflib libXt libpng12.x86_64 mesa-libGL.i686 glibc.i686 bzip2-libs.i686 libpng.i686 libtiff.i686 libXft.i686```
+```sudo yum -y install libSM libX11 libXext libXt```
 
-You can download the AEDT installer from the Ansys website or push it to your machine using scp. 
+You can download the STAR-CCM+ installer from the Siemens PLM website or push it to your machine using scp. 
 `scp /path/own/machine/ELECTRONICS_version.zip "opc@1.1.1.1:/home/opc/"`
 
-Without a VNC connection, a silent installation needs to be done. In our case, the license is pointing to a license server at IP 192.168.0.1. If you have different settings, you can record another option file with -options-record "/path/to/dir/filename"
+Without a VNC connection, a silent installation needs to be done. 
 
 ```
 mkdir /mnt/share/install
-echo -W Agree.selection=1 > /home/opc/silent_cmd_aedt.txt
-echo -P installLocation="/mnt/share/install/AnsysEM" >> /home/opc/silent_cmd_aedt.txt
-echo -W TempDirectory.tempPath="/mnt/local/tmp" >> /home/opc/silent_cmd_aedt.txt
-echo -W TempDirectory.ChangeTempPermission="1" >> /home/opc/silent_cmd_aedt.txt
-echo -W LibraryOption.libraryOption=0 >> /home/opc/silent_cmd_aedt.txt
-echo -W LibraryOption.libraryPath="" >> /home/opc/silent_cmd_aedt.txt
-echo -W LicenseOption.licenseOption=2 >> /home/opc/silent_cmd_aedt.txt
-echo -W LicenseOption.licenseFileName="" >> /home/opc/silent_cmd_aedt.txt
-echo -W LicenseOption.serverCount=1 >> /home/opc/silent_cmd_aedt.txt
-echo -W LicenseOption.serverName1="192.168.0.1" >> /home/opc/silent_cmd_aedt.txt
-echo -W LicenseOption.serverName2="" >> /home/opc/silent_cmd_aedt.txt
-echo -W LicenseOption.serverName3="" >> /home/opc/silent_cmd_aedt.txt
-echo -W LicenseOption.tcpPort=1055 >> /home/opc/silent_cmd_aedt.txt
-unzip /path/own/machine/ELECTRONICS_version.zip
-/path/own/machine/Electronics_version/Linux/AnsysEM/disk1/setup.exe -options "/home/opc/silent_cmd_aedt.txt" -silent
-```
-
-## Installing Remote Solve Mamager
-In case you will create multiple nodes, RSM will be used to submit the jobs to the different machines. We also need to add some ports through the firewall. 
-
-```
-echo -W Agree.selection=1 > /home/opc/silent_cmd_rsm.txt
-echo -P installLocation="/mnt/share/install" >> /home/opc/silent_cmd_rsm.txt
-/path/own/machine/Electronics_version/Linux/AnsysEM/disk1/setup.exe -options "/home/opc/silent_cmd_rsm.txt" -silent
-sudo firewall-cmd --permanent --zone=public --add-port=11180/tcp
-sudo firewall-cmd --permanent --zone=public --add-port=12180/tcp
-sudo firewall-cmd --permanent --zone=public --add-port=13180/tcp
-sudo firewall-cmd --permanent --zone=public --add-port=40000-59999/tcp
-sudo firewall-cmd --permanent --zone=public --add-source=10.0.0.0/16
-sudo firewall-cmd --reload
-```
-
-If the headnode will also be a compute node, start the RSM service. This will need to be done on each compute node as well.
-
-```
-sudo /mnt/share/install/rsm/Linux64/ansoftrsmservice startonboot -user opc
-```
-
-The Ansys EDT install need to be registered with RSM once, either on the headnode or on one compute node:
-
-```
-sudo /mnt/share/install/AnsysEM/AnsysEM19.4/Linux64/RegisterEnginesWithRSM.pl add
-```
-
-## Linking the /tmp directory on the headnode
-If you have made multiple partition on your NVMe drive on the headnode, this will not be needed as you can write in /mnt/local/tmp.
-
-Ansys AEDT will use the /mnt/local/tmp directory to run the calculation. This is currently on your boot volume which is not really efficient. We will link this directory 
-
-```
-mkdir /mnt/share/tmp
-sudo mkdir /mnt/local
-sudo ln -s /mnt/share/tmp /mnt/local/
+/path/own/machine/installscript.sh -i silent -DINSTALLDIR=/mnt/share/install/
 ```
 
 ## Connecting all compute node
@@ -383,6 +332,7 @@ sudo ln -s /mnt/share/tmp /mnt/local/
 Each compute node needs to be able to talk to each compute node. SSH communication works but RSM has some issue if you don't have each host in the known host file. If you used terraform, the headnode contains a file with all the ip address of the compute nodes. If not, you can compute it using the CIDR block of you private subnet
 
 ```
+sudo yum install -y nmap
 nmap -sn 10.0.3.0/24 | grep "scan report" | sed -e 's/.*(\(.*\)).*/\1/' > iplist.txt
 ```
 
@@ -393,6 +343,24 @@ wget https://github.com/oci-hpc/oci-hpc-runbook-HFSS/raw/master/scripts/generate
 chmod 777 generate_ssh_file.sh
 ./generate_ssh_file.sh
 ```
+
+## Create a machinefile
+
+STAR-CCM+ on the headnode does not automatically know which compute nodes are available. You can create a machinefile at `/mnt/share/install/machinefile.txt` with the private IP address of all the nodes along with the number of CPUs available. 
+
+```
+10.0.0.2:72
+10.0.3.2:72
+10.0.3.3:72
+privateIP:cores_available
+...
+```
+
+
+## Disable Hyperthreading
+
+
+
 
 ## (Optional) Set up a VNC
 By default, the only access to the CentOS machine is through SSH in a console mode. If you want to see the Ansys EDT interface, you will need to set up a VNC connection. The following script will work for the default user opc. The password for the vnc session is set as "password" but it can be edited in the next commands. 
@@ -430,13 +398,13 @@ After logging in for the first time, go to application/System Tools/Settings and
 <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/CentOSSeetings.jpg" height="150"> 
 
 # Running the Application
-Running Ansys Electronic Desktop is pretty straightforward: 
+Running Star-CCM+ is pretty straightforward: 
 You can either start the GUI if you have a VNC session started with 
 ```
-/mnt/share/install/AnsysEM/AnsysEM19.4/Linux64/ansysedt
+/mnt/share/install/...
 ```
 
-If you do not, you can run Ansys EDT in batch mode:
+Running in batch mode is done this way:
 Copy the `/mnt/share/install/AnsysEM/AnsysEM19.4/Linux64/Examples/HFSS/RF\ Microwave/Tee.*` to `/mnt/share/work`
 
 Edit the folowing command with your own IP's for the nodes. (In this case: 10.0.3.3 and 10.0.3.4)
