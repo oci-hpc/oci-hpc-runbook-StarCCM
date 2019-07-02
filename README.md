@@ -304,6 +304,8 @@ terraform init
 terraform plan
 terraform apply
 ```
+
+**If you wish to add or remove nodes after the setup has happened, just modify the variable in the variable.tf file and rerun the `terraform apply` command**
 ### Destroy
 ```
 cd <folder>
@@ -329,7 +331,7 @@ mkdir /mnt/share/install
 
 ## Connecting all compute node
 
-Each compute node needs to be able to talk to each compute node. SSH communication works but RSM has some issue if you don't have each host in the known host file. If you used terraform, the headnode contains a file with all the ip address of the compute nodes. If not, you can compute it using the CIDR block of you private subnet
+Each compute node needs to be able to talk to each compute node. SSH communication works but RSM has some issue if you don't have each host in the known host file. You can compute it using the CIDR block of you private subnet. If you used terraform to create the cluster, this step has already happened. 
 
 ```
 sudo yum install -y nmap
