@@ -1,4 +1,5 @@
-# <img src="https://github.com/oci-hpc/oci-hpc-runbook-HFSS/blob/master/Images/203-40.png" height="40"> Siemens Simcenter STAR-CCM+ Runbook
+# <img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Images/starccm_logo.png" height="60"> Siemens Simcenter STAR-CCM+ Runbook
+
 ## Introduction
 This Runbook will take you through the process of deploying one or multiple machines on Oracle Cloud Infrastructure, installing Simcenter STAR-CCM+, configuring the license, and then running a model.
 
