@@ -359,7 +359,13 @@ privateIP:cores_available
 
 ## Disable Hyperthreading
 
-
+Siemens recommmend to turn off hyperthreading on your compute nodes to get better performances. This means that you have only one thread per CPU. By default, on HPC shapes, you have 36 CPU with 2 threads. You can turn it off like this:
+```
+for i in {36..71}; do
+   echo "Disabling logical HT core $i."
+   echo 0 | sudo tee /sys/devices/system/cpu/cpu${i}/online;
+done
+```
 
 
 ## (Optional) Set up a VNC
@@ -401,20 +407,11 @@ After logging in for the first time, go to application/System Tools/Settings and
 Running Star-CCM+ is pretty straightforward: 
 You can either start the GUI if you have a VNC session started with 
 ```
-/mnt/share/install/...
+/mnt/share/install/version/STAR-CCM+version/star/bin/starccm+
 ```
+To run on multiple nodes, place the model.sim in `/mnt/share/work/` and replace the number of cores used in total as the np argument. 
 
-Running in batch mode is done this way:
-Copy the `/mnt/share/install/AnsysEM/AnsysEM19.4/Linux64/Examples/HFSS/RF\ Microwave/Tee.*` to `/mnt/share/work`
-
-Edit the folowing command with your own IP's for the nodes. (In this case: 10.0.3.3 and 10.0.3.4)
-
-``` shell
-/mnt/share/install/AnsysEM/AnsysEM19.4/Linux64/ansysedt -jobid RSM_batchrun -distributed \
--machinelist list=10.0.3.3:-1:72:90%,10.0.3.4:-1:72:90% -auto -monitor -ng -batchoptions  \
-"'HFSS/AllowOffCore'=1 'HFSS/DefaultProcessPriority'='Normal' 'HFSS/EnableGPU'=0 'HFSS/EnableGPUForSBR'=1\
-'HFSS/HPCLicenseType'='Pack' 'HFSS/LegacyHFSS_TR'=0 'HFSS/LegacyIE'=0 'HFSS/MPIVendor'='Platform Computing'\
-'HFSS/RemoteSpawnCommand'='SSH' 'HFSS/UseLegacyElectronicsHPC'=1" -batchsolve TeeModel:Nominal:Setup1 \
- /mnt/share/work/Tee.aedt
+```
+/mnt/share/install/14.04.011/STAR-CCM+14.04.011/star/bin/starccm+ -batch -power -licpath 1999@flex.cd-adapco.com -podkey ++AaAaaaAAaAAAAAAAAAaa -np 106 -machinefile /mnt/share/install/machinelist.txt /mnt/share/work/model.sim
 ```
 
