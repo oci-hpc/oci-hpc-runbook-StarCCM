@@ -1,6 +1,6 @@
 # <img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Images/starccm_logo.png" height="60"> Siemens Simcenter STAR-CCM+ Runbook
 
-## Introduction
+# Introduction
 This Runbook will take you through the process of deploying one or multiple machines on Oracle Cloud Infrastructure, installing Simcenter STAR-CCM+, configuring the license, and then running a model.
 
 Simcenter STAR-CCM+ is a complete multiphysics solution for the simulation of products and designs.
@@ -9,23 +9,23 @@ Running Simcenter STAR-CCM+ on Oracle Cloud Infrastructure is quite straightforw
 
 ![]( "Example Simcenter STAR-CCM+ simulation") 
  
-## Architecture
+# Architecture
 The architecture for this runbook is as follow, we have one main machine (The headnode) that will start the jobs. Other machines (Compute Nodes) will be accessible from the headnode and STAR-CCM+ will distribute the jobs to the compute nodes. The headnode will be accesible through SSH from anyone with the key (or VNC if you decide to enable it) Compute nodes will only be accessible from inside the network. This is made possible with 1 Virtual Cloud Network with 2 subnets, one public and one private.   
 
 ![](https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/HPC_arch_draft.png "GPU Architecture for Running HFSS in OCI")
 
-## Deployment
+# Deployment
 There are multiple options available to get started with STAR-CCM+ on OCI. The next 2 sections will show how to do it from the console in a webbrowser and using a Terraform script. Scripts are especially usefull with more complex architecture. For STARCCM+, 2 architectures are interesting. 
 ** Single HPC node
 ** Cluster with multiple compute nodes
-### Console
-#### Log In
+## Console
+### Log In
 You can start by logging in the Oracle Cloud console. If this is the first time, instructions to do so are available [here](https://docs.cloud.oracle.com/iaas/Content/GSG/Tasks/signingin.htm).
 Select the region in which you wish to create your instance. Click on the current region in the top right dropdown list to select another one. 
 
 <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/Region.png" height="50">
 
-#### Virtual Cloud Network
+### Virtual Cloud Network
 Before creating an instance, we need to configure a Virtual Cloud Network. Select the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> on the top left, then select Networking and Virtual Cloud Networks. <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/create_vcn.png" height="20">
 
 On the next page, select the following: 
@@ -42,7 +42,7 @@ If you are using one compute node, the subnet was created during the VNC creatio
 
 Before we generate a private subnet, we will define a security rule to be able to access it from the headnode. We would also like to download packages on our compute nodes, we will create a NAT gateway to be able to access online repositories to update the machine. 
 
-##### NAT Gateway
+#### NAT Gateway
 You have just created a VCN, click on the name.
 In the ressource menu on the left side of the page, select NAT Gateways.
 
@@ -53,7 +53,7 @@ Click <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/raw/master/ima
 Choose a name (Ex:STARCCM_NAT) and click <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/raw/master/images/NAT.png" height="20">
 
 
-##### Security List
+#### Security List
 In the ressource menu on the left side of the page, select Security Lists.
 
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/raw/master/images/create_sl.png" height="20">
@@ -89,7 +89,7 @@ Click <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/im
 Click <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/addIngress.png" height="20"> 
 
 
-##### Route Table
+#### Route Table
 In the ressource menu on the left side of the page, select Route Tables.
 
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/raw/master/images/create_rt.png" height="20">
@@ -119,7 +119,7 @@ Choose the following settings:
 
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/raw/master/images/create_subnet.png" height="20">
 
-#### Compute Instance
+### Compute Instance
 Create a new instance by selecting the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> on the top left, then select Compute and Instances. 
 
 <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/Instances.png" height="300">
@@ -157,7 +157,7 @@ Add the content of id_rsa.pub into the file /home/opc/.ssh/authorized_keys. You 
 
 ```cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys```
 
-#### Mounting a drive
+### Mounting a drive
 
 HPC machines have local NVMe storage but it is not mounted by default. Let's take care of that! 
 
@@ -217,9 +217,9 @@ sudo chmod 777 /mnt/local
 ```
 
 
-#### Creating a Network File System
+### Creating a Network File System
 
-##### Headnode
+#### Headnode
 
 Since the headnode is in a public subnet, we will keep the firewall up and add an exception through. 
 ```
@@ -240,7 +240,7 @@ To activate those changes:
 
 ```sudo exportfs -a```
 
-##### Compute Nodes
+#### Compute Nodes
 On the compute nodes, since they are in a private subnet with security list restricting access, we can disable it altogether. We will also install the nfs-utils tools and mount the drive. You will need to grab the private IP address of the headnode. You can find it in the instance details in the webbrowser where you created the instances, or find it by running the command `ifconfig` on the headnode. It will probably be something like 10.0.0.2, 10.0.1.2 or 10.0.2.2 depending on the CIDR block of the public subnet. 
 
 ```
@@ -251,12 +251,12 @@ sudo mount 10.0.0.2:/mnt/share /mnt/share
 ```
 
 
-#### Allow communication between machines
+### Allow communication between machines
 After creating the headnode, you generated a key for the cluster using `ssh.keygen`. We will need to send the file `~/.ssh/id_rsa` on all compute nodes. On the headnode, run ```scp /home/opc/.ssh/id_rsa 10.0.3.2:/home/opc/.ssh``` and run it for each compute node by changing the IP address. 
 
 
-### Terraform Script
-#### Terraform Installation
+## Terraform Script
+### Terraform Installation
 
 Download the binaries on the [terraform website](https://www.terraform.io/) and unzip the package. Depending on your Linux distribution, it should be similar to this:
 
@@ -271,8 +271,8 @@ source ~/.bashrc
 
 To check that the installation was done correctly: `terraform -version` should return the version. 
 
-#### Using terraform
-##### Configure
+### Using terraform
+#### Configure
 Download the tar file and untar the content (Not Available yet):
 * [HPC Shape](https://github.com/oci-hpc/oci-hpc-runbook-HFSS/raw/master/terraform_templates/clusterHPC.tar)
 
@@ -296,22 +296,22 @@ Edit the file terraform.tfvars for your settings, info can be found [on the terr
 
 In the variable.tf file, you can change the availability domain, and the number of compute nodes. 
 
-##### Run
+#### Run
 ```
 cd <folder>
 terraform init
 terraform plan
 terraform apply
 ```
-##### Destroy
+#### Destroy
 ```
 cd <folder>
 terraform destroy
 ```
 
-## Installation
+# Installation
 This guide will show the different steps for the CentOS 7 image available on Oracle Cloud Infrastructure. 
-### Installing AEDT
+## Installing AEDT
 There are a couple of library that need to be added to the CentOS image. 
 
 ```sudo yum -y install mesa-libGLU-devel mesa-libGL-devel libXp mesa-dri-drivers libXmu libXft giflib libXt libpng12.x86_64 mesa-libGL.i686 glibc.i686 bzip2-libs.i686 libpng.i686 libtiff.i686 libXft.i686```
@@ -340,7 +340,7 @@ unzip /path/own/machine/ELECTRONICS_version.zip
 /path/own/machine/Electronics_version/Linux/AnsysEM/disk1/setup.exe -options "/home/opc/silent_cmd_aedt.txt" -silent
 ```
 
-### Installing Remote Solve Mamager
+## Installing Remote Solve Mamager
 In case you will create multiple nodes, RSM will be used to submit the jobs to the different machines. We also need to add some ports through the firewall. 
 
 ```
@@ -367,7 +367,7 @@ The Ansys EDT install need to be registered with RSM once, either on the headnod
 sudo /mnt/share/install/AnsysEM/AnsysEM19.4/Linux64/RegisterEnginesWithRSM.pl add
 ```
 
-### Linking the /tmp directory on the headnode
+## Linking the /tmp directory on the headnode
 If you have made multiple partition on your NVMe drive on the headnode, this will not be needed as you can write in /mnt/local/tmp.
 
 Ansys AEDT will use the /mnt/local/tmp directory to run the calculation. This is currently on your boot volume which is not really efficient. We will link this directory 
@@ -378,7 +378,7 @@ sudo mkdir /mnt/local
 sudo ln -s /mnt/share/tmp /mnt/local/
 ```
 
-### Connecting all compute node
+## Connecting all compute node
 
 Each compute node needs to be able to talk to each compute node. SSH communication works but RSM has some issue if you don't have each host in the known host file. If you used terraform, the headnode contains a file with all the ip address of the compute nodes. If not, you can compute it using the CIDR block of you private subnet
 
@@ -394,7 +394,7 @@ chmod 777 generate_ssh_file.sh
 ./generate_ssh_file.sh
 ```
 
-### (Optional) Set up a VNC
+## (Optional) Set up a VNC
 By default, the only access to the CentOS machine is through SSH in a console mode. If you want to see the Ansys EDT interface, you will need to set up a VNC connection. The following script will work for the default user opc. The password for the vnc session is set as "password" but it can be edited in the next commands. 
 
 ```
@@ -429,7 +429,7 @@ After logging in for the first time, go to application/System Tools/Settings and
 
 <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/CentOSSeetings.jpg" height="150"> 
 
-## Running the Application
+# Running the Application
 Running Ansys Electronic Desktop is pretty straightforward: 
 You can either start the GUI if you have a VNC session started with 
 ```
