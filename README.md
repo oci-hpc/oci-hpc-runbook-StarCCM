@@ -104,7 +104,7 @@ Click + Additional Route Rule and select the settings:
 
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/raw/master/images/create_rt.png" height="20">
 
-#### Subnet
+### Subnet
 In the ressource menu on the left side of the page, select Subnets.
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/raw/master/images/create_subnet.png" height="20">
 
