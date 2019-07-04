@@ -255,6 +255,45 @@ sudo mount 10.0.0.2:/mnt/share /mnt/share
 ## Allow communication between machines
 After creating the headnode, you generated a key for the cluster using `ssh.keygen`. We will need to send the file `~/.ssh/id_rsa` on all compute nodes. On the headnode, run ```scp /home/opc/.ssh/id_rsa 10.0.3.2:/home/opc/.ssh``` and run it for each compute node by changing the IP address. 
 
+## Adding a GPU Node for pre/post processing
+
+Simcenter STAR-CCM+ can let you take advantage of the power of GPUs for post-processing your model. We can turn a GPU node on demand while the simulation is done. 
+
+Create a new instance by selecting the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> on the top left, then select Compute and Instances. 
+
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/Instances.png" height="300">
+
+On the next page, select <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/create_instance.png" height="25">
+
+On the next page, select the following:
+* Name of your instance
+* Availibility Domain: Each region has multiple availability domain. Some instance shapes are only available in certain AD.
+* Change the image source to Oracle Linux 7.6
+* Instance Type: Select Bare metal for BM.GPU2.2 or Virtual Machine for VM.GPU2.1
+* Instance Shape: 
+  * BM.GPU2.2
+  * VM.GPU2.1
+  * BM.GPU3.8
+  * VM.GPU3.*
+  * Other shapes are available as well, [click for more information](https://cloud.oracle.com/compute/bare-metal/features).
+* SSH key: Attach your public key file. [For more information](https://docs.cloud.oracle.com/iaas/Content/GSG/Tasks/creatingkeys.htm).
+* Virtual Cloud Network: Select the network that you have previsouly created. In the case of a cluster: Select the public subnet.
+
+Click <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/create_instance.png" height="20">
+
+After a few minutes, the instances will turn green meaning it is up and running. You can now SSH into it. After clicking on the name of the instance, you will find the public IP. You can now connect using `ssh opc@xx.xx.xx.xx` from the machine using the key that was provided during the creation. 
+
+Use SSH to remote login to the machine and mount the share drive as show before: 
+
+```
+sudo firewall-cmd --permanent --zone=public --add-service=nfs
+sudo firewall-cmd --reload
+sudo yum -y install nfs-utils
+sudo mkdir /mnt/share
+sudo mount 10.0.0.2:/mnt/share /mnt/share
+```
+
+You will need to follow the steps to set up a VNC session described below. Once you did that, in STAR-CCM+, select Tools from the top menu then options and visualization. In the GPU Utilization, select Default, Unmanaged or Opportunistic to utilize the GPU. The difference in the visualization modes are explained in the STAR-CCM+ Documentation under "Controlling Graphics Performance"
 
 # Deployement through Terraform Script
 ## Terraform Installation
