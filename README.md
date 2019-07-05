@@ -423,26 +423,17 @@ sudo chown opc:opc /home/opc/.vnc
 echo "password" | vncpasswd -f > /home/opc/.vnc/passwd
 chown opc:opc /home/opc/.vnc/passwd
 chmod 600 /home/opc/.vnc/passwd
-sudo firewall-offline-cmd --zone=public --add-port=5900-5901/tcp
-sudo systemctl restart firewalld
-sudo systemctl daemon-reload
 sudo systemctl start vncserver@:0.service
 sudo systemctl enable vncserver@:0.service
 ```
 
-In the console, we need to allow access to the different port to allow access.
+We will connect through an SSH tunnel to the instance. On your machine, connect using ssh 
 
-In Networking/Virtual Cloud Networks, select your VCN and the subnet in which your machine is located and Select the security list associated with it.
+```
+ssh -x -L 5902:127.0.0.1:5900 opc@public_ip
+```
 
-Click <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/addIngress.png" height="20"> 
-* CIDR : 0.0.0.0/0
-* IP PROTOCOL: TCP
-* Source Port Range: All
-* Destination Port Range:5900-5901
-
-After logging in for the first time, go to application/System Tools/Settings and in Power, set the timer for Blank Screen in Power saving to Never.
-
-<img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/CentOSSeetings.jpg" height="150"> 
+You can now connect using any VNC viewer using localhost:2 as VNC server and the password you set during the vnc installation. 
 
 # Running the Application
 Running Star-CCM+ is pretty straightforward: 
