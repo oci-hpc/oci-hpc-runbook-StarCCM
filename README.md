@@ -370,7 +370,8 @@ mkdir /mnt/share/install
 
 ## Connecting all compute node
 
-Each compute node needs to be able to talk to each compute node. SSH communication works but RSM has some issue if you don't have each host in the known host file. You can compute it using the CIDR block of you private subnet. If you used terraform to create the cluster, this step has already happened. 
+If you used terraform to create the cluster, this step has been done already. 
+Each compute node needs to be able to talk to each compute node. SSH communication works but RSM has some issue if you don't have each host in the known host file. You can compute it using the CIDR block of you private subnet. 
 
 ```
 sudo yum install -y nmap
@@ -387,6 +388,7 @@ chmod 777 generate_ssh_file.sh
 
 ## Create a machinefile
 
+If you used terraform to create the cluster, this step has been done already. 
 STAR-CCM+ on the headnode does not automatically know which compute nodes are available. You can create a machinefile at `/mnt/share/install/machinefile.txt` with the private IP address of all the nodes along with the number of CPUs available. 
 
 ```
@@ -397,9 +399,9 @@ privateIP:cores_available
 ...
 ```
 
-
 ## Disable Hyperthreading
 
+If you used terraform to create the cluster, this step has been done already. 
 Siemens recommmend to turn off hyperthreading on your compute nodes to get better performances. This means that you have only one thread per CPU. By default, on HPC shapes, you have 36 CPU with 2 threads. You can turn it off like this:
 ```
 for i in {36..71}; do
@@ -410,6 +412,8 @@ done
 
 
 ## (Optional) Set up a VNC
+If you used terraform to create the cluster, this step has been done already for the GPU instance.
+
 By default, the only access to the CentOS machine is through SSH in a console mode. If you want to see the Ansys EDT interface, you will need to set up a VNC connection. The following script will work for the default user opc. The password for the vnc session is set as "password" but it can be edited in the next commands. 
 
 ```
