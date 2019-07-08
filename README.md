@@ -367,8 +367,6 @@ Choose the Name and Compartment
 
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20"> and fill in the variables. 
 
-* Tenancy_ocid: Specific ID of your tenancy for OCI: To find your tenancy ocid, go to the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> and select Administration, then Tenancy Details. Find the compartment and copy the ocid.
-* Compartment_ocid: Specific ID of your compartment for OCI: To find your compartment ocid, go to the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> and select Identity, then Compartments. Copy the ocid from the Tenancy Information.
 * Region: Region name, (eu-frankfurt-1,...)
 * AD: Availability Domain of the cluster (1,2 or 3)
 * GPU_AD: Availability Domain of the GPU Machine (1,2 or 3)
