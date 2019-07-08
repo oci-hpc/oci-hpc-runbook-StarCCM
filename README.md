@@ -453,7 +453,7 @@ done
 ```
 
 
-## (Optional) Set up a VNC
+## Set up a VNC
 If you used terraform to create the cluster, this step has been done already for the GPU instance.
 
 By default, the only access to the CentOS machine is through SSH in a console mode. If you want to see the Ansys EDT interface, you will need to set up a VNC connection. The following script will work for the default user opc. The password for the vnc session is set as "password" but it can be edited in the next commands. 
