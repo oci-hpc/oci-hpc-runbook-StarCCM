@@ -17,8 +17,8 @@ The architecture for this runbook is as follow, we have one main machine (The he
 # Deployment via web console
 There are multiple options available to get started with STAR-CCM+ on OCI. The next 3 sections will show how to do it from the console in a webbrowser, using a Terraform script and through the Resoucre Manager. Scripts are especially usefull for a complex architecture. For STAR-CCM+, 2 architectures are interesting. 
 
-** Single HPC node
-** Cluster with multiple compute nodes
+* Single HPC node
+* Cluster with multiple compute nodes
 
 ## Log In
 You can start by logging in the Oracle Cloud console. If this is the first time, instructions to do so are available [here](https://docs.cloud.oracle.com/iaas/Content/GSG/Tasks/signingin.htm).
