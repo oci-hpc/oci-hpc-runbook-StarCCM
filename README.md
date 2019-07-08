@@ -15,7 +15,7 @@ The architecture for this runbook is as follow, we have one main machine (The he
 ![](https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/HPC_arch_draft.png "GPU Architecture for Running HFSS in OCI")
 
 # Deployment via web console
-There are multiple options available to get started with STAR-CCM+ on OCI. The next 2 sections will show how to do it from the console in a webbrowser and using a Terraform script. Scripts are especially usefull with more complex architecture. For STARCCM+, 2 architectures are interesting. 
+There are multiple options available to get started with STAR-CCM+ on OCI. The next 3 sections will show how to do it from the console in a webbrowser, using a Terraform script and through the Resoucre Manager. Scripts are especially usefull for a complex architecture. For STAR-CCM+, 2 architectures are interesting. 
 
 ** Single HPC node
 ** Cluster with multiple compute nodes
@@ -345,14 +345,58 @@ terraform apply
 ```
 
 **If you wish to add or remove nodes after the setup has happened, just modify the variable in the variable.tf file and rerun the `terraform apply` command**
+
 ### Destroy
 ```
 cd <folder>
 terraform destroy
 ```
+## Resource Manager
+
+In the OCI console, there is a Resource Manager available. This will launch your terraform package from a GUI rather than through batch commands. 
+
+To use it, there is no terraform installation, fingerprint, ap key or user ID needed.  
+
+Select the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> on the top left, then select Resource Manager and Stacks. 
+
+Create a new stack: <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/stack.png" height="20">
+
+Download the ZIP file for STAR-CCM+
+Add you private key to the zip file
+Upload the ZIP file
+
+Choose the Name and Compartment
+
+Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20"> and fill in the variables. 
+
+* Tenancy_ocid: Specific ID of your tenancy for OCI: To find your tenancy ocid, go to the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> and select Administration, then Tenancy Details. Find the compartment and copy the ocid.
+* Compartment_ocid: Specific ID of your compartment for OCI: To find your compartment ocid, go to the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> and select Identity, then Compartments. Copy the ocid from the Tenancy Information.
+* Region: Region name, (eu-frankfurt-1,...)
+* AD: Availability Domain of the cluster (1,2 or 3)
+* GPU_AD: Availability Domain of the GPU Machine (1,2 or 3)
+* COMPUTENODE_COUNT: Number of compute machines (Integer)
+* GPUNODE_COUNT: Number of GPU machines for Pre/Post
+* GPUPASSWORD: password to use the VNC session on the Pre/Post Node
+* SIZE_SHARE_VOLUME: Size of the share disk (0 to 5500)
+* SSH_PUBLIC_KEY: Public key to access the cluster
+* SSH_PRIVATE_KEY_PATH: Private key path. (Name of the file that you added to the zip)
+* COMPUTE_SHAPE: Shape of the Compute Node (BM.HPC2.36)
+* HEADNODE_SHAPE: Shape of the Head Node which is also a Compute Node in our architecture (BM.HPC2.36)
+* GPU_SHAPE: Shape of the Compute Node (VM.GPU2.1,BM.GPU2.2,...)
+
+Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20">
+
+Review the informations and click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/create.png" height="20">
+
+Now that your stack is created, you can apply the terraform commands. 
+
+Select the stack that you created.
+In the "Terraform Actions" dropdown menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/tf_actions.png" height="20">, run terraform apply to launch the cluster and terraform destroy to delete it. 
 
 # Installation
 This guide will show the different steps for the Oracle Linux 7.6 image available on Oracle Cloud Infrastructure. 
+If you have used the terraform or Resource Manager approach, only the download and installation of STAR-CCM+ on the headnode is needed. 
+
 ## Installing STAR-CCM+
 There are a couple of library that need to be added to the Oracle Linux image on the headnode and the compute nodes.
 
