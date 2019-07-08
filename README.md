@@ -295,7 +295,7 @@ sudo mount 10.0.0.2:/mnt/share /mnt/share
 
 You will need to follow the steps to set up a VNC session described below. Once you did that, in STAR-CCM+, select Tools from the top menu then options and visualization. In the GPU Utilization, select Default, Unmanaged or Opportunistic to utilize the GPU. The difference in the visualization modes are explained in the STAR-CCM+ Documentation under "Controlling Graphics Performance"
 
-# Deployement through Terraform Script
+# Deployment through Terraform Script
 ## Terraform Installation
 
 Download the binaries on the [terraform website](https://www.terraform.io/) and unzip the package. Depending on your Linux distribution, it should be similar to this:
@@ -351,11 +351,9 @@ terraform apply
 cd <folder>
 terraform destroy
 ```
-## Resource Manager
+# Deployment through Resource Manager
 
 In the OCI console, there is a Resource Manager available. This will launch your terraform package from a GUI rather than through batch commands. 
-
-To use it, there is no terraform installation, fingerprint, ap key or user ID needed.  
 
 Select the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> on the top left, then select Resource Manager and Stacks. 
 
