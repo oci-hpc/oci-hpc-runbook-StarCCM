@@ -9,9 +9,16 @@ Running Simcenter STAR-CCM+ on Oracle Cloud Infrastructure is quite straightforw
 
 ![]( "Example Simcenter STAR-CCM+ simulation") 
  
- **Table of Contents**
+**Table of Contents**
 - [Introduction](#introduction)
 - [Architecture](#architecture)
+- [Deployment through Resource Manager](#deployment-through-resource-manager)
+- [Deployment through Terraform Script](#deployment-through-terraform-script)
+  - [Terraform Installation](#terraform-installation)
+  - [Using terraform](#using-terraform)
+    - [Configure](#configure)
+    - [Run](#run)
+    - [Destroy](#destroy)
 - [Deployment via web console](#deployment-via-web-console)
   - [Log In](#log-in)
   - [Virtual Cloud Network](#virtual-cloud-network)
@@ -24,17 +31,118 @@ Running Simcenter STAR-CCM+ on Oracle Cloud Infrastructure is quite straightforw
   - [Mounting a drive](#mounting-a-drive)
   - [Creating a Network File System](#creating-a-network-file-system)
     - [Headnode](#headnode)
+    - [Compute Nodes](#compute-nodes)
+  - [Allow communication between machines](#allow-communication-between-machines)
+  - [Adding a GPU Node for pre/post processing](#adding-a-gpu-node-for-prepost-processing)
+- [Installation](#installation)
+  - [Installing STAR-CCM+](#installing-star-ccm)
   - [Connecting all compute node](#connecting-all-compute-node)
   - [Create a machinefile](#create-a-machinefile)
   - [Disable Hyperthreading](#disable-hyperthreading)
   - [Set up a VNC](#set-up-a-vnc)
 - [Running the Application](#running-the-application)
-
  
 # Architecture
 The architecture for this runbook is as follow, we have one main machine (The headnode) that will start the jobs. Other machines (Compute Nodes) will be accessible from the headnode and STAR-CCM+ will distribute the jobs to the compute nodes. The headnode will be accesible through SSH from anyone with the key (or VNC if you decide to enable it) Compute nodes will only be accessible from inside the network. This is made possible with 1 Virtual Cloud Network with 2 subnets, one public and one private.   
 
 ![](https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/HPC_arch_draft.png "GPU Architecture for Running HFSS in OCI")
+
+# Deployment through Resource Manager
+
+In the OCI console, there is a Resource Manager available. This will launch your terraform package from a GUI rather than through batch commands. 
+
+Select the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> on the top left, then select Resource Manager and Stacks. 
+
+Create a new stack: <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/stack.png" height="20">
+
+Download the ZIP file for STAR-CCM+
+Add you private key to the zip file
+Upload the ZIP file
+
+Choose the Name and Compartment
+
+Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20"> and fill in the variables. 
+
+* Region: Region name, (eu-frankfurt-1,...)
+* AD: Availability Domain of the cluster (1,2 or 3)
+* GPU_AD: Availability Domain of the GPU Machine (1,2 or 3)
+* COMPUTENODE_COUNT: Number of compute machines (Integer)
+* GPUNODE_COUNT: Number of GPU machines for Pre/Post
+* GPUPASSWORD: password to use the VNC session on the Pre/Post Node
+* SIZE_SHARE_VOLUME: Size of the share disk (0 to 5500)
+* SSH_PUBLIC_KEY: Public key to access the cluster
+* SSH_PRIVATE_KEY_PATH: Private key path. (Name of the file that you added to the zip)
+* COMPUTE_SHAPE: Shape of the Compute Node (BM.HPC2.36)
+* HEADNODE_SHAPE: Shape of the Head Node which is also a Compute Node in our architecture (BM.HPC2.36)
+* GPU_SHAPE: Shape of the Compute Node (VM.GPU2.1,BM.GPU2.2,...)
+
+Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20">
+
+Review the informations and click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/create.png" height="20">
+
+Now that your stack is created, you can apply the terraform commands. 
+
+Select the stack that you created.
+In the "Terraform Actions" dropdown menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/tf_actions.png" height="20">, run terraform apply to launch the cluster and terraform destroy to delete it. 
+
+Once you have done this step, everything else in this runbook will be done except for the [download and instalation of the software](#installing-star-ccm).
+
+# Deployment through Terraform Script
+## Terraform Installation
+
+Download the binaries on the [terraform website](https://www.terraform.io/) and unzip the package. Depending on your Linux distribution, it should be similar to this:
+
+```
+tf_install_dir=~/tf_install_dir
+cd $tf_install_dir
+wget https://releases.hashicorp.com/terraform/0.12.0/terraform_0.12.0_linux_amd64.zip
+unzip terraform_0.12.0_linux_amd64.zip
+echo export PATH="\$PATH:$tf_install_dir" >> ~/.bashrc
+source ~/.bashrc
+```
+
+To check that the installation was done correctly: `terraform -version` should return the version. 
+
+## Using terraform
+### Configure
+Download the tar file and untar the content (Not Available yet):
+* [HPC Shape](https://github.com/oci-hpc/oci-hpc-runbook-HFSS/raw/master/terraform_templates/clusterHPC.tar)
+
+Edit the file terraform.tfvars for your settings, info can be found [on the terraform website](https://www.terraform.io/docs/providers/oci/index.html#authentication)
+
+* Tenancy_ocid
+* User_ocid
+* Compartment_ocid
+* Private_key_path
+* Fingerprint
+* SSH_private_key_path
+* SSH_public_key
+* Region
+
+**Note1: For Compartment_ocid: To find your compartment ocid, go to the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> and select Identity, then Compartments. Find the compartment and copy the ocid.**
+
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/compartment_OCID.png" height="150">
+
+**Note2: The private_key_path and fingerprint are not related to the ssh key to access the instance. You can create using those [instructions](https://docs.cloud.oracle.com/iaas/Content/API/Concepts/apisigningkey.htm). The SSH public and private keys can be generated like [this](https://docs.cloud.oracle.com/iaas/Content/GSG/Tasks/creatingkeys.htm)**
+
+
+In the variable.tf file, you can change the availability domain, and the number of compute nodes. 
+
+### Run
+```
+cd <folder>
+terraform init
+terraform plan
+terraform apply
+```
+
+**If you wish to add or remove nodes after the setup has happened, just modify the variable in the variable.tf file and rerun the `terraform apply` command**
+
+### Destroy
+```
+cd <folder>
+terraform destroy
+```
 
 # Deployment via web console
 There are multiple options available to get started with STAR-CCM+ on OCI. The next 3 sections will show how to do it from the console in a webbrowser, using a Terraform script and through the Resoucre Manager. Scripts are especially usefull for a complex architecture. For STAR-CCM+, 2 architectures are interesting. 
@@ -261,9 +369,12 @@ Edit the file /etc/exports with vim or your favorite text editor. `sudo vi /etc/
 
 To activate those changes:
 
-```sudo exportfs -a```
+```
+sudo exportfs -a
+```
 
 ### Compute Nodes
+
 On the compute nodes, since they are in a private subnet with security list restricting access, we can disable it altogether. We will also install the nfs-utils tools and mount the drive. You will need to grab the private IP address of the headnode. You can find it in the instance details in the webbrowser where you created the instances, or find it by running the command `ifconfig` on the headnode. It will probably be something like 10.0.0.2, 10.0.1.2 or 10.0.2.2 depending on the CIDR block of the public subnet. 
 
 ```
@@ -317,99 +428,6 @@ sudo mount 10.0.0.2:/mnt/share /mnt/share
 
 You will need to follow the steps to set up a VNC session described below. Once you did that, in STAR-CCM+, select Tools from the top menu then options and visualization. In the GPU Utilization, select Default, Unmanaged or Opportunistic to utilize the GPU. The difference in the visualization modes are explained in the STAR-CCM+ Documentation under "Controlling Graphics Performance"
 
-# Deployment through Terraform Script
-## Terraform Installation
-
-Download the binaries on the [terraform website](https://www.terraform.io/) and unzip the package. Depending on your Linux distribution, it should be similar to this:
-
-```
-tf_install_dir=~/tf_install_dir
-cd $tf_install_dir
-wget https://releases.hashicorp.com/terraform/0.12.0/terraform_0.12.0_linux_amd64.zip
-unzip terraform_0.12.0_linux_amd64.zip
-echo export PATH="\$PATH:$tf_install_dir" >> ~/.bashrc
-source ~/.bashrc
-```
-
-To check that the installation was done correctly: `terraform -version` should return the version. 
-
-## Using terraform
-### Configure
-Download the tar file and untar the content (Not Available yet):
-* [HPC Shape](https://github.com/oci-hpc/oci-hpc-runbook-HFSS/raw/master/terraform_templates/clusterHPC.tar)
-
-Edit the file terraform.tfvars for your settings, info can be found [on the terraform website](https://www.terraform.io/docs/providers/oci/index.html#authentication)
-
-* Tenancy_ocid
-* User_ocid
-* Compartment_ocid
-* Private_key_path
-* Fingerprint
-* SSH_private_key_path
-* SSH_public_key
-* Region
-
-**Note1: For Compartment_ocid: To find your compartment ocid, go to the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> and select Identity, then Compartments. Find the compartment and copy the ocid.**
-
-<img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/compartment_OCID.png" height="150">
-
-**Note2: The private_key_path and fingerprint are not related to the ssh key to access the instance. You can create using those [instructions](https://docs.cloud.oracle.com/iaas/Content/API/Concepts/apisigningkey.htm). The SSH public and private keys can be generated like [this](https://docs.cloud.oracle.com/iaas/Content/GSG/Tasks/creatingkeys.htm)**
-
-
-In the variable.tf file, you can change the availability domain, and the number of compute nodes. 
-
-### Run
-```
-cd <folder>
-terraform init
-terraform plan
-terraform apply
-```
-
-**If you wish to add or remove nodes after the setup has happened, just modify the variable in the variable.tf file and rerun the `terraform apply` command**
-
-### Destroy
-```
-cd <folder>
-terraform destroy
-```
-# Deployment through Resource Manager
-
-In the OCI console, there is a Resource Manager available. This will launch your terraform package from a GUI rather than through batch commands. 
-
-Select the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> on the top left, then select Resource Manager and Stacks. 
-
-Create a new stack: <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/stack.png" height="20">
-
-Download the ZIP file for STAR-CCM+
-Add you private key to the zip file
-Upload the ZIP file
-
-Choose the Name and Compartment
-
-Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20"> and fill in the variables. 
-
-* Region: Region name, (eu-frankfurt-1,...)
-* AD: Availability Domain of the cluster (1,2 or 3)
-* GPU_AD: Availability Domain of the GPU Machine (1,2 or 3)
-* COMPUTENODE_COUNT: Number of compute machines (Integer)
-* GPUNODE_COUNT: Number of GPU machines for Pre/Post
-* GPUPASSWORD: password to use the VNC session on the Pre/Post Node
-* SIZE_SHARE_VOLUME: Size of the share disk (0 to 5500)
-* SSH_PUBLIC_KEY: Public key to access the cluster
-* SSH_PRIVATE_KEY_PATH: Private key path. (Name of the file that you added to the zip)
-* COMPUTE_SHAPE: Shape of the Compute Node (BM.HPC2.36)
-* HEADNODE_SHAPE: Shape of the Head Node which is also a Compute Node in our architecture (BM.HPC2.36)
-* GPU_SHAPE: Shape of the Compute Node (VM.GPU2.1,BM.GPU2.2,...)
-
-Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20">
-
-Review the informations and click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/create.png" height="20">
-
-Now that your stack is created, you can apply the terraform commands. 
-
-Select the stack that you created.
-In the "Terraform Actions" dropdown menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/tf_actions.png" height="20">, run terraform apply to launch the cluster and terraform destroy to delete it. 
 
 # Installation
 This guide will show the different steps for the Oracle Linux 7.6 image available on Oracle Cloud Infrastructure. 
@@ -418,7 +436,9 @@ If you have used the terraform or Resource Manager approach, only the download a
 ## Installing STAR-CCM+
 There are a couple of library that need to be added to the Oracle Linux image on the headnode and the compute nodes.
 
-```sudo yum -y install libSM libX11 libXext libXt```
+```
+sudo yum -y install libSM libX11 libXext libXt
+```
 
 You can download the STAR-CCM+ installer from the Siemens PLM website or push it to your machine using scp. 
 `scp /path/own/machine/ELECTRONICS_version.zip "opc@1.1.1.1:/home/opc/"`
