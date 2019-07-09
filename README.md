@@ -7,7 +7,7 @@ Simcenter STAR-CCM+ is a complete multiphysics solution for the simulation of pr
 
 Running Simcenter STAR-CCM+ on Oracle Cloud Infrastructure is quite straightforward, follow along this guide for all the tips and tricks. 
 
-![]( "Example Simcenter STAR-CCM+ simulation") 
+![Images/Screenshot 2019-07-09 at 14.50.19.png]( "Example Simcenter STAR-CCM+ simulation") 
  
 **Table of Contents**
 - [Introduction](#introduction)
