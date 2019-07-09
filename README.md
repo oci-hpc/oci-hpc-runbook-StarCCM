@@ -9,6 +9,28 @@ Running Simcenter STAR-CCM+ on Oracle Cloud Infrastructure is quite straightforw
 
 ![]( "Example Simcenter STAR-CCM+ simulation") 
  
+ **Table of Contents**
+- [Introduction](#introduction)
+- [Architecture](#architecture)
+- [Deployment via web console](#deployment-via-web-console)
+  - [Log In](#log-in)
+  - [Virtual Cloud Network](#virtual-cloud-network)
+    - [Subnets](#subnets)
+    - [NAT Gateway](#nat-gateway)
+    - [Security List](#security-list)
+    - [Route Table](#route-table)
+    - [Subnet](#subnet)
+  - [Compute Instance](#compute-instance)
+  - [Mounting a drive](#mounting-a-drive)
+  - [Creating a Network File System](#creating-a-network-file-system)
+    - [Headnode](#headnode)
+  - [Connecting all compute node](#connecting-all-compute-node)
+  - [Create a machinefile](#create-a-machinefile)
+  - [Disable Hyperthreading](#disable-hyperthreading)
+  - [Set up a VNC](#set-up-a-vnc)
+- [Running the Application](#running-the-application)
+
+ 
 # Architecture
 The architecture for this runbook is as follow, we have one main machine (The headnode) that will start the jobs. Other machines (Compute Nodes) will be accessible from the headnode and STAR-CCM+ will distribute the jobs to the compute nodes. The headnode will be accesible through SSH from anyone with the key (or VNC if you decide to enable it) Compute nodes will only be accessible from inside the network. This is made possible with 1 Virtual Cloud Network with 2 subnets, one public and one private.   
 
