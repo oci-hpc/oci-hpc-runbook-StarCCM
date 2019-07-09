@@ -537,6 +537,8 @@ mkdir /mnt/share/install
 /path/own/machine/installscript.sh -i silent -DINSTALLDIR=/mnt/share/install/
 ```
 
+If you would like to include the installation in the Resource Manager or terraform script. Unzip the files and edit the file install_script-HN.sh.
+
 # Running the Application
 Running Star-CCM+ is pretty straightforward: 
 You can either start the GUI if you have a VNC session started with 
