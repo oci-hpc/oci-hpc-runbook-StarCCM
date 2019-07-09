@@ -50,7 +50,14 @@ The architecture for this runbook is as follow, we have one main machine (The he
 
 # Deployment through Resource Manager
 
-In the OCI console, there is a Resource Manager available. This will launch your terraform package from a GUI rather than through batch commands. 
+## Log In
+You can start by logging in the Oracle Cloud console. If this is the first time, instructions to do so are available [here](https://docs.cloud.oracle.com/iaas/Content/GSG/Tasks/signingin.htm).
+Select the region in which you wish to create your instance. Click on the current region in the top right dropdown list to select another one. 
+
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/Region.png" height="50">
+
+## Resource Manager
+In the OCI console, there is a Resource Manager available that will create all the resources needed. 
 
 Select the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> on the top left, then select Resource Manager and Stacks. 
 
@@ -61,6 +68,8 @@ Add you private key to the zip file
 Upload the ZIP file
 
 Choose the Name and Compartment
+
+## Select variables
 
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20"> and fill in the variables. 
 
@@ -81,12 +90,14 @@ Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master
 
 Review the informations and click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/create.png" height="20">
 
-Now that your stack is created, you can apply the terraform commands. 
+## Run the stack
+
+Now that your stack is created, you can run jobs. 
 
 Select the stack that you created.
 In the "Terraform Actions" dropdown menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/tf_actions.png" height="20">, run terraform apply to launch the cluster and terraform destroy to delete it. 
 
-Once you have done this step, everything else in this runbook will be done except for the [download and instalation of the software](#installing-star-ccm).
+Once you have done this step, everything else in this runbook will be done except for [the download and instalation of the software](#installing-star-ccm).
 
 # Deployment through Terraform Script
 ## Terraform Installation
