@@ -429,26 +429,38 @@ sudo mount 10.0.0.2:/mnt/share /mnt/share
 You will need to follow the steps to set up a VNC session described below. Once you did that, in STAR-CCM+, select Tools from the top menu then options and visualization. In the GPU Utilization, select Default, Unmanaged or Opportunistic to utilize the GPU. The difference in the visualization modes are explained in the STAR-CCM+ Documentation under "Controlling Graphics Performance"
 
 
+## Set up a VNC
+If you used terraform to create the cluster, this step has been done already for the GPU instance.
+
+By default, the only access to the CentOS machine is through SSH in a console mode. If you want to see the Ansys EDT interface, you will need to set up a VNC connection. The following script will work for the default user opc. The password for the vnc session is set as "password" but it can be edited in the next commands. 
+
+```
+sudo yum -y groupinstall "Server with GUI"
+sudo yum -y install tigervnc-server mesa-libGL
+sudo systemctl set-default graphical.target
+sudo cp /usr/lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:0.service
+sudo sed -i 's/<USER>/opc/g' /etc/systemd/system/vncserver@:0.service
+sudo mkdir /home/opc/.vnc/
+sudo chown opc:opc /home/opc/.vnc
+echo "password" | vncpasswd -f > /home/opc/.vnc/passwd
+chown opc:opc /home/opc/.vnc/passwd
+chmod 600 /home/opc/.vnc/passwd
+sudo systemctl start vncserver@:0.service
+sudo systemctl enable vncserver@:0.service
+```
+
+We will connect through an SSH tunnel to the instance. On your machine, connect using ssh 
+
+```
+ssh -x -L 5902:127.0.0.1:5900 opc@public_ip
+```
+
+You can now connect using any VNC viewer using localhost:2 as VNC server and the password you set during the vnc installation. 
+
+
 # Installation
 This guide will show the different steps for the Oracle Linux 7.6 image available on Oracle Cloud Infrastructure. 
 If you have used the terraform or Resource Manager approach, only the download and installation of STAR-CCM+ on the headnode is needed. 
-
-## Installing STAR-CCM+
-There are a couple of library that need to be added to the Oracle Linux image on the headnode and the compute nodes.
-
-```
-sudo yum -y install libSM libX11 libXext libXt
-```
-
-You can download the STAR-CCM+ installer from the Siemens PLM website or push it to your machine using scp. 
-`scp /path/own/machine/ELECTRONICS_version.zip "opc@1.1.1.1:/home/opc/"`
-
-Without a VNC connection, a silent installation needs to be done. 
-
-```
-mkdir /mnt/share/install
-/path/own/machine/installscript.sh -i silent -DINSTALLDIR=/mnt/share/install/
-```
 
 ## Connecting all compute node
 
@@ -492,34 +504,22 @@ for i in {36..71}; do
 done
 ```
 
-
-## Set up a VNC
-If you used terraform to create the cluster, this step has been done already for the GPU instance.
-
-By default, the only access to the CentOS machine is through SSH in a console mode. If you want to see the Ansys EDT interface, you will need to set up a VNC connection. The following script will work for the default user opc. The password for the vnc session is set as "password" but it can be edited in the next commands. 
+## Installing STAR-CCM+
+There are a couple of library that need to be added to the Oracle Linux image on the headnode and the compute nodes.
 
 ```
-sudo yum -y groupinstall "Server with GUI"
-sudo yum -y install tigervnc-server mesa-libGL
-sudo systemctl set-default graphical.target
-sudo cp /usr/lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:0.service
-sudo sed -i 's/<USER>/opc/g' /etc/systemd/system/vncserver@:0.service
-sudo mkdir /home/opc/.vnc/
-sudo chown opc:opc /home/opc/.vnc
-echo "password" | vncpasswd -f > /home/opc/.vnc/passwd
-chown opc:opc /home/opc/.vnc/passwd
-chmod 600 /home/opc/.vnc/passwd
-sudo systemctl start vncserver@:0.service
-sudo systemctl enable vncserver@:0.service
+sudo yum -y install libSM libX11 libXext libXt
 ```
 
-We will connect through an SSH tunnel to the instance. On your machine, connect using ssh 
+You can download the STAR-CCM+ installer from the Siemens PLM website or push it to your machine using scp. 
+`scp /path/own/machine/ELECTRONICS_version.zip "opc@1.1.1.1:/home/opc/"`
+
+Without a VNC connection, a silent installation needs to be done. 
 
 ```
-ssh -x -L 5902:127.0.0.1:5900 opc@public_ip
+mkdir /mnt/share/install
+/path/own/machine/installscript.sh -i silent -DINSTALLDIR=/mnt/share/install/
 ```
-
-You can now connect using any VNC viewer using localhost:2 as VNC server and the password you set during the vnc installation. 
 
 # Running the Application
 Running Star-CCM+ is pretty straightforward: 
