@@ -6,8 +6,9 @@ This Runbook will take you through the process of deploying one or multiple mach
 Simcenter STAR-CCM+ is a complete multiphysics solution for the simulation of products and designs.
 
 Running Simcenter STAR-CCM+ on Oracle Cloud Infrastructure is quite straightforward, follow along this guide for all the tips and tricks. 
-
-<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/raw/master/Images/Screenshot 2019-07-09 at 14.50.19.png" height="300">
+<p align="center">
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/raw/master/Images/Screenshot 2019-07-09 at 14.50.19.png" height="400" >
+ </p>
  
 **Table of Contents**
 - [Introduction](#introduction)
