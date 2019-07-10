@@ -77,17 +77,15 @@ Choose the Name and Compartment
 
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20"> and fill in the variables. 
 
-* Region: Region name, (eu-frankfurt-1,...)
 * AD: Availability Domain of the cluster (1,2 or 3)
-* GPU_AD: Availability Domain of the GPU Machine (1,2 or 3)
-* COMPUTENODE_COUNT: Number of compute machines (Integer)
-* GPUNODE_COUNT: Number of GPU machines for Pre/Post
-* GPUPASSWORD: password to use the VNC session on the Pre/Post Node
-* SIZE_SHARE_VOLUME: Size of the share disk (0 to 5500)
-* SSH_PUBLIC_KEY: Public key to access the cluster
 * SSH_PRIVATE_KEY_PATH: Private key path. (Name of the file that you added to the zip)
+* SSH_PUBLIC_KEY: Public key to access the cluster
+* COMPUTENODE_COUNT: Number of compute machines (Integer)
 * COMPUTE_SHAPE: Shape of the Compute Node (BM.HPC2.36)
 * HEADNODE_SHAPE: Shape of the Head Node which is also a Compute Node in our architecture (BM.HPC2.36)
+* GPUNODE_COUNT: Number of GPU machines for Pre/Post
+* GPUPASSWORD: password to use the VNC session on the Pre/Post Node
+* GPU_AD: Availability Domain of the GPU Machine (1,2 or 3)
 * GPU_SHAPE: Shape of the Compute Node (VM.GPU2.1,BM.GPU2.2,...)
 
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20">
@@ -142,7 +140,7 @@ Edit the file terraform.tfvars for your settings, info can be found [on the terr
 **Note2: The private_key_path and fingerprint are not related to the ssh key to access the instance. You can create using those [instructions](https://docs.cloud.oracle.com/iaas/Content/API/Concepts/apisigningkey.htm). The SSH public and private keys can be generated like [this](https://docs.cloud.oracle.com/iaas/Content/GSG/Tasks/creatingkeys.htm)**
 
 
-In the variable.tf file, you can change the availability domain, and the number of compute nodes. 
+In the variable.tf file, you can change the availability domain, the number of compute nodes, the number of GPU nodes, the shapes of the instances,... 
 
 ### Run
 ```
@@ -537,7 +535,7 @@ mkdir /mnt/share/install
 /path/own/machine/installscript.sh -i silent -DINSTALLDIR=/mnt/share/install/
 ```
 
-If you would like to include the installation in the Resource Manager or terraform script. Unzip the files and edit the file install_script-HN.sh.
+If you would like to include the installation in the Resource Manager or terraform script. Unzip the files and edit the file hn-start-starccm.sh
 
 # Running the Application
 Running Star-CCM+ is pretty straightforward: 
