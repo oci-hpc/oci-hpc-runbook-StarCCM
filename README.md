@@ -551,3 +551,16 @@ To run on multiple nodes, place the model.sim in `/mnt/share/work/` and replace 
 /mnt/share/install/14.04.011/STAR-CCM+14.04.011/star/bin/starccm+ -batch -power -licpath 1999@flex.cd-adapco.com -podkey ++AaAaaaAAaAAAAAAAAAaa -np 106 -machinefile /mnt/share/install/machinelist.txt /mnt/share/work/model.sim
 ```
 
+# Benchmark Example
+
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/images/compartment_OCID.png" height="150">
+
+Performances of STAR-CCM+ are often measured using the LeMans benchmark with 17 and 105 Millions cells. The next graphs are showing how using more nodes impact the runtime, with a scaling really close to 100%. RDMA network, which has not been discussed in this runbook, only start to differentiate versus regular TCP runs if the Cells / Core ratio starts to go down.  
+
+## 17 Millions Cells
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/images/compartment_OCID.png" height="150">
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/images/compartment_OCID.png" height="150">
+
+## 105 Millions Cells
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/compartment_OCID.png" height="150">
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/compartment_OCID.png" height="150">
