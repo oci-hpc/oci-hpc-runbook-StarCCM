@@ -46,6 +46,9 @@ Running Simcenter STAR-CCM+ on Oracle Cloud Infrastructure is quite straightforw
   - [Disable Hyperthreading](#disable-hyperthreading)
   - [Installing STAR-CCM+](#installing-star-ccm)
 - [Running the Application](#running-the-application)
+- [Benchmark Example](#benchmark-example)
+  - [17 Millions Cells](#17-millions-cells)
+  - [105 Millions Cells](#105-millions-cells)
  
 # Architecture
 The architecture for this runbook is as follow, we have one main machine (The headnode) that will start the jobs. Other machines (Compute Nodes) will be accessible from the headnode and STAR-CCM+ will distribute the jobs to the compute nodes. The headnode will be accesible through SSH from anyone with the key (or VNC if you decide to enable it) Compute nodes will only be accessible from inside the network. This is made possible with 1 Virtual Cloud Network with 2 subnets, one public and one private.   
@@ -553,17 +556,20 @@ To run on multiple nodes, place the model.sim in `/mnt/share/work/` and replace 
 
 # Benchmark Example
 <p align="center">
-<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Images/lemans.png" height="350">
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Images/lemans.png" height="300">
 </p>
 Performances of STAR-CCM+ are often measured using the LeMans benchmark with 17 and 105 Millions cells. The next graphs are showing how using more nodes impact the runtime, with a scaling really close to 100%. RDMA network, which has not been discussed in this runbook, only start to differentiate versus regular TCP runs if the Cells / Core ratio starts to go down.  
 
 ## 17 Millions Cells
+
 <p align="center">
-<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Images/RunTime_17M.png" height="300">
-<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Images/scaling_17M.png" height="300">
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Images/RunTime_17M.png" height="350">
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Images/scaling_17M.png" height="350">
 </p>
+
 ## 105 Millions Cells
+
 <p align="center">
-<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Images/RunTime_105M.png" height="300">
-<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Images/Scaling_105M.png" height="300">
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Images/RunTime_105M.png" height="350">
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Images/Scaling_105M.png" height="350">
 </p>
