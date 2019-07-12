@@ -355,6 +355,15 @@ Click <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/im
 
 Now you should be able to VNC to the address: ip.add.re.ss:5900
 
+Once you accessed your VNC session, you should go into the settings.  
+
+<img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/raw/master/images/CentOSSeetings.jpg" height="100"> 
+
+Select and set the time to "Never". If you do get locked out of your user session, you can ssh to the instance and set a password for the opc user. 
+
+```
+sudo passwd opc
+```
 
 # Installation
 This guide will show the different steps for the Oracle Linux 7.6 image available on Oracle Cloud Infrastructure. 
