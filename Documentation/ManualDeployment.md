@@ -321,6 +321,7 @@ sudo systemctl start vncserver@:0.service
 sudo systemctl enable vncserver@:0.service
 ```
 
+## Accessing a VNC
 We will connect through an SSH tunnel to the instance. On your machine, connect using ssh 
 
 ```
