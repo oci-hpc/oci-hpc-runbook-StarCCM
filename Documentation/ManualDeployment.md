@@ -335,6 +335,21 @@ If you would rather connect without a SSH tunnel. You will need to open ports 59
 sudo firewall-offline-cmd --zone=public --add-port=5900-5901/tcp
 ```
 
+Select the menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/menu.png" height="20"> on the top left, then select Networking and Virtual Cloud Networks. <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/create_vcn.png" height="20">
+
+Select the VCN that you created. Select the Subnet in which the machine reside, probably your public subnet. Select the security list. 
+
+Click <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/addIngress.png" height="20">  
+
+* CIDR : 0.0.0.0/0
+* IP PROTOCOL: TCP
+* Source Port Range: All
+* Destination Port Range: 5900-5901
+Click <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/addIngress.png" height="20"> 
+
+Now you should be able to VNC to the address: ip.add.re.ss:5900
+
+
 # Installation
 This guide will show the different steps for the Oracle Linux 7.6 image available on Oracle Cloud Infrastructure. 
 If you have used the terraform or Resource Manager approach, only the download and installation of STAR-CCM+ on the headnode is needed. 
