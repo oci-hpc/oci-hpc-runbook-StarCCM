@@ -14,11 +14,11 @@ Running Simcenter STAR-CCM+ on Oracle Cloud Infrastructure is quite straightforw
 - [Introduction](#introduction)
 - [Architecture](#architecture)
 - [Deployment through Resource Manager](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/ResourceManager.md#deployment-through-resource-manager)
-- [Deployment through Terraform Script](#deployment-through-terraform-script)
-- [Deployment via web console](#deployment-via-web-console)
-- [Installing STAR-CCM+](#installing-star-ccm)
-- [Running the Application](#running-the-application)
-- [Benchmark Example](#benchmark-example)
+- [Deployment through Terraform Script](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/terraform.md#deployment-through-terraform-script)
+- [Deployment via web console](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/ManualDeployment.md#deployment-via-web-console)
+- [Installing STAR-CCM+](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/STAR-CCM%2B.md#installing-star-ccm)
+- [Running the Application](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/STAR-CCM%2B.md#running-the-application)
+- [Benchmark Example](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/STAR-CCM%2B.md#benchmark-example)
  
 # Architecture
 The architecture for this runbook is as follow, we have one main machine (The headnode) that will start the jobs. Other machines (Compute Nodes) will be accessible from the headnode and STAR-CCM+ will distribute the jobs to the compute nodes. The headnode will be accesible through SSH from anyone with the key (or VNC if you decide to enable it) Compute nodes will only be accessible from inside the network. This is made possible with 1 Virtual Cloud Network with 2 subnets, one public and one private.   
