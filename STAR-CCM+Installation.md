@@ -11,7 +11,7 @@ sudo yum -y install libSM libX11 libXext libXt
 ```
 
 You can download the STAR-CCM+ installer from the Siemens PLM website or push it to your machine using scp. 
-`scp /path/own/machine/ELECTRONICS_version.zip "opc@1.1.1.1:/home/opc/"`
+`scp /path/own/machine/STAR-CCM_version.zip "opc@1.1.1.1:/home/opc/"`
 
 Without a VNC connection, a silent installation needs to be done. 
 
