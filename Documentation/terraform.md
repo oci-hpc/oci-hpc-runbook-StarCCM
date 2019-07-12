@@ -1,5 +1,8 @@
+# <img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/raw/master/Images/STARCCM_logo.png" height="60"> Siemens Simcenter STAR-CCM+ Runbook
 
 # Deployment through Terraform Script
+
+**Table of Contents**
 - [Deployment through Terraform Script](#deployment-through-terraform-script)
   - [Terraform Installation](#terraform-installation)
   - [Using terraform](#using-terraform)
