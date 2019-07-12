@@ -65,3 +65,25 @@ terraform apply
 cd <folder>
 terraform destroy
 ```
+
+## Access your cluster
+
+Once you have created your cluster, if you gave a valid URL for the STAR-CCM+ installation, no other action will be needed except [running your jobs](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/STAR-CCM%2B.md#running-the-application).
+
+Public IP addresses are written at the end of the run. 
+
+The key to log on to your cluster has been created in your main directory as key.pem
+
+```
+ssh -i /home/user/key.pem opc@ipaddress
+```
+
+Access to the GPU instances can be done through a SSH tunnel:
+
+```
+ssh -i /home/user/key.pem -x -L 5902:127.0.0.1:5900 opc@ipaddress
+```
+
+And then connect to a VNC viewer with localhost:2.
+
+[More information](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/ManualDeployment.md#accessing-a-vnc) about using a VNC session. 
