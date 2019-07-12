@@ -57,8 +57,6 @@ In the next window, copy the "PRE-AUTHENTICATED REQUEST URL" and keep it. You wi
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20"> and fill in the variables. 
 
 * AD: Availability Domain of the cluster (1,2 or 3)
-* SSH_PRIVATE_KEY_PATH: Private key path. (Name of the file that you added to the zip)
-* SSH_PUBLIC_KEY: Public key to access the cluster
 * COMPUTENODE_COUNT: Number of compute machines (Integer)
 * COMPUTE_SHAPE: Shape of the Compute Node (BM.HPC2.36)
 * HEADNODE_SHAPE: Shape of the Head Node which is also a Compute Node in our architecture (BM.HPC2.36)
@@ -66,6 +64,7 @@ Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master
 * GPUPASSWORD: password to use the VNC session on the Pre/Post Node
 * GPU_AD: Availability Domain of the GPU Machine (1,2 or 3)
 * GPU_SHAPE: Shape of the Compute Node (VM.GPU2.1,BM.GPU2.2,...)
+* INSTALLER_URL: URL of the installer of STAR-CCM+
 
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20">
 
