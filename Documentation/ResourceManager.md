@@ -76,4 +76,14 @@ Now that your stack is created, you can run jobs.
 Select the stack that you created.
 In the "Terraform Actions" dropdown menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/tf_actions.png" height="20">, run terraform apply to launch the cluster and terraform destroy to delete it. 
 
-Once you have done this step, everything else in this runbook will be done except for [the download and instalation of the software](#installing-star-ccm).
+Once you have created your cluster, if you gave a valid URL for the STAR-CCM+ installation, no other action will be needed excfpet [running your jobs](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/STAR-CCM%2B.md#running-the-application).
+
+Public IP addresses of the created machines can be found on the lower left menu under Outputs. 
+
+The Private Key to access the machines can also be found there. Copy the text in a file on your machine, let's say /home/user/key. 
+
+```
+chmod 600 /home/user/key
+ssh -i /home/user/key opc@ipaddress
+```
+
