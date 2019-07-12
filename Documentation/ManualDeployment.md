@@ -1,3 +1,10 @@
+# <img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/raw/master/Images/STARCCM_logo.png" height="60"> Siemens Simcenter STAR-CCM+ Runbook
+
+
+# Deployment via web console
+
+**Table of Contents**
+
 - [Deployment via web console](#deployment-via-web-console)
   - [Log In](#log-in-1)
   - [Virtual Cloud Network](#virtual-cloud-network)
@@ -20,8 +27,6 @@
   - [Create a machinefile](#create-a-machinefile)
   - [Disable Hyperthreading](#disable-hyperthreading)
   - [Installing STAR-CCM+](#installing-star-ccm)
-
-# Deployment via web console
 
 ## Log In
 You can start by logging in the Oracle Cloud console. If this is the first time, instructions to do so are available [here](https://docs.cloud.oracle.com/iaas/Content/GSG/Tasks/signingin.htm).
