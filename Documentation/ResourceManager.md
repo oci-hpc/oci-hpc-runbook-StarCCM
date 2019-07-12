@@ -7,7 +7,7 @@
 - [Deployment through Resource Manager](#deployment-through-resource-manager)
   - [Log In](#log-in)
   - [Resource Manager](#resource-manager)
-  - [## Add STAR-CCM+ installer to Object Storage](#add-star-ccm-installer-to-object-storage)
+  - [Add STAR-CCM+ installer to Object Storage](#add-star-ccm-installer-to-object-storage)
   - [Select variables](#select-variables)
   - [Run the stack](#run-the-stack)
 
@@ -39,15 +39,13 @@ Create a new bucket or select an existing one. To create one, click on <img src=
 
 Leave the default options: Standard as Storage tiers and Oracle-Managed keys. Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/create_bucket.png" height="20">
 
-Click on the newly created bucket name and then select 
-
-<img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/upload_object.png" height="20">
+Click on the newly created bucket name and then select <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/upload_object.png" height="20">
 
 Select your file and click <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/upload_object.png" height="20">
 
 Click on the 3 dots to the right side of the object you just uploaded <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/3dots.png" height="20"> and select "Create Pre-Authenticated Request". 
 
-In the following menu, leave the default options and select an expiration date for the URL of your installer. Click on  <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/pre_auth.png" height="20">
+In the following menu, leave the default options and select an expiration date for the URL of your installer. Click on  <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/pre_auth.png" height="25">
 
 In the next window, copy the "PRE-AUTHENTICATED REQUEST URL" and keep it. You will not be able to retrieve it after you close this window. If you loose it or it expires, it is always possible to recreate another Pre-Authenticated Request that will generate a different URL. 
 
