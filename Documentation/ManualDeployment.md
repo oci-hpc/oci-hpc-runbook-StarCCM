@@ -355,11 +355,11 @@ Click <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/im
 
 Now you should be able to VNC to the address: ip.add.re.ss:5900
 
-Once you accessed your VNC session, you should go into the settings.  
+Once you accessed your VNC session, you should go into Applications, then System Tools Then Settings.  
 
 <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/raw/master/images/CentOSSeetings.jpg" height="100"> 
 
-Select and set the time to "Never". If you do get locked out of your user session, you can ssh to the instance and set a password for the opc user. 
+In the power options, set the Blank screen timeout to "Never". If you do get locked out of your user session, you can ssh to the instance and set a password for the opc user. 
 
 ```
 sudo passwd opc
