@@ -329,6 +329,11 @@ ssh -x -L 5902:127.0.0.1:5900 opc@public_ip
 
 You can now connect using any VNC viewer using localhost:2 as VNC server and the password you set during the vnc installation. 
 
+If you would rather connect without a SSH tunnel. You will need to open ports 5900 and 5901 on the Linux machine both in the firewall and in the security list. 
+
+```
+sudo firewall-offline-cmd --zone=public --add-port=5900-5901/tcp
+```
 
 # Installation
 This guide will show the different steps for the Oracle Linux 7.6 image available on Oracle Cloud Infrastructure. 
