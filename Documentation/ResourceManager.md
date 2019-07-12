@@ -10,6 +10,8 @@
   - [Add STAR-CCM+ installer to Object Storage](#add-star-ccm-installer-to-object-storage)
   - [Select variables](#select-variables)
   - [Run the stack](#run-the-stack)
+  - [Access your cluster](#access-your-cluster)
+  
 
 ## Log In
 You can start by logging in the Oracle Cloud console. If this is the first time, instructions to do so are available [here](https://docs.cloud.oracle.com/iaas/Content/GSG/Tasks/signingin.htm).
@@ -76,7 +78,9 @@ Now that your stack is created, you can run jobs.
 Select the stack that you created.
 In the "Terraform Actions" dropdown menu <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/tf_actions.png" height="20">, run terraform apply to launch the cluster and terraform destroy to delete it. 
 
-Once you have created your cluster, if you gave a valid URL for the STAR-CCM+ installation, no other action will be needed excfpet [running your jobs](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/STAR-CCM%2B.md#running-the-application).
+## Access your cluster
+
+Once you have created your cluster, if you gave a valid URL for the STAR-CCM+ installation, no other action will be needed except [running your jobs](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/STAR-CCM%2B.md#running-the-application).
 
 Public IP addresses of the created machines can be found on the lower left menu under Outputs. 
 
