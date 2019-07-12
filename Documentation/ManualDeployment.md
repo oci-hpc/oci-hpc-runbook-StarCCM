@@ -26,7 +26,6 @@
   - [Connecting all compute node](#connecting-all-compute-node)
   - [Create a machinefile](#create-a-machinefile)
   - [Disable Hyperthreading](#disable-hyperthreading)
-  - [Installing STAR-CCM+](#installing-star-ccm)
 
 ## Log In
 You can start by logging in the Oracle Cloud console. If this is the first time, instructions to do so are available [here](https://docs.cloud.oracle.com/iaas/Content/GSG/Tasks/signingin.htm).
