@@ -1,5 +1,12 @@
 
 # Deployment through Terraform Script
+- [Deployment through Terraform Script](#deployment-through-terraform-script)
+  - [Terraform Installation](#terraform-installation)
+  - [Using terraform](#using-terraform)
+    - [Configure](#configure)
+    - [Run](#run)
+    - [Destroy](#destroy)
+
 ## Terraform Installation
 
 Download the binaries on the [terraform website](https://www.terraform.io/) and unzip the package. Depending on your Linux distribution, it should be similar to this:
