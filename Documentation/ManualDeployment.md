@@ -14,6 +14,7 @@
   - [Allow communication between machines](#allow-communication-between-machines)
   - [Adding a GPU Node for pre/post processing](#adding-a-gpu-node-for-prepost-processing)
   - [Set up a VNC](#set-up-a-vnc)
+  - [Access a VNC](#access-a-vnc)
 - [Installation](#installation)
   - [Connecting all compute node](#connecting-all-compute-node)
   - [Create a machinefile](#create-a-machinefile)
