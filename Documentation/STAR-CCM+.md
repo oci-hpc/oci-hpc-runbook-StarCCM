@@ -1,6 +1,11 @@
+# <img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/raw/master/Images/STARCCM_logo.png" height="60"> Siemens Simcenter STAR-CCM+ Runbook
+
+
 # Running STAR-CCM+
 
-- [Installing STAR-CCM+](#installing-the-application)
+
+**Table of Contents**
+- [Installing STAR-CCM+](#installing-star-ccm)
 - [Running the Application](#running-the-application)
 - [Benchmark Example](#benchmark-example)
   - [17 Millions Cells](#17-millions-cells)
