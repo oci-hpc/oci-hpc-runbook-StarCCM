@@ -14,46 +14,38 @@ Running Simcenter STAR-CCM+ on Oracle Cloud Infrastructure is quite straightforw
 - [Introduction](#introduction)
 - [Architecture](#architecture)
 - [Deployment through Resource Manager](#deployment-through-resource-manager)
-  - [Log In](#log-in)
-  - [Resource Manager](#resource-manager)
-  - [Select variables](#select-variables)
-  - [Run the stack](#run-the-stack)
 - [Deployment through Terraform Script](#deployment-through-terraform-script)
-  - [Terraform Installation](#terraform-installation)
-  - [Using terraform](#using-terraform)
-    - [Configure](#configure)
-    - [Run](#run)
-    - [Destroy](#destroy)
 - [Deployment via web console](#deployment-via-web-console)
-  - [Log In](#log-in-1)
-  - [Virtual Cloud Network](#virtual-cloud-network)
-    - [Subnets](#subnets)
-    - [NAT Gateway](#nat-gateway)
-    - [Security List](#security-list)
-    - [Route Table](#route-table)
-    - [Subnet](#subnet)
-  - [Compute Instance](#compute-instance)
-  - [Mounting a drive](#mounting-a-drive)
-  - [Creating a Network File System](#creating-a-network-file-system)
-    - [Headnode](#headnode)
-    - [Compute Nodes](#compute-nodes)
-  - [Allow communication between machines](#allow-communication-between-machines)
-  - [Adding a GPU Node for pre/post processing](#adding-a-gpu-node-for-prepost-processing)
-  - [Set up a VNC](#set-up-a-vnc)
-- [Installation](#installation)
-  - [Connecting all compute node](#connecting-all-compute-node)
-  - [Create a machinefile](#create-a-machinefile)
-  - [Disable Hyperthreading](#disable-hyperthreading)
-  - [Installing STAR-CCM+](#installing-star-ccm)
+- [Installing STAR-CCM+](#installing-star-ccm)
 - [Running the Application](#running-the-application)
 - [Benchmark Example](#benchmark-example)
-  - [17 Millions Cells](#17-millions-cells)
-  - [105 Millions Cells](#105-millions-cells)
  
 # Architecture
 The architecture for this runbook is as follow, we have one main machine (The headnode) that will start the jobs. Other machines (Compute Nodes) will be accessible from the headnode and STAR-CCM+ will distribute the jobs to the compute nodes. The headnode will be accesible through SSH from anyone with the key (or VNC if you decide to enable it) Compute nodes will only be accessible from inside the network. This is made possible with 1 Virtual Cloud Network with 2 subnets, one public and one private.   
 
 ![](https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/HPC_arch_draft.png "GPU Architecture for Running HFSS in OCI")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Deployment through Resource Manager
 
