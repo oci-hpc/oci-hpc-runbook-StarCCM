@@ -62,8 +62,8 @@ Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master
 * HEADNODE_SHAPE: Shape of the Head Node which is also a Compute Node in our architecture (BM.HPC2.36)
 * GPUNODE_COUNT: Number of GPU machines for Pre/Post
 * GPUPASSWORD: password to use the VNC session on the Pre/Post Node
-* GPU_AD: Availability Domain of the GPU Machine (1,2 or 3)
-* GPU_SHAPE: Shape of the Compute Node (VM.GPU2.1,BM.GPU2.2,...)
+* GPU_AD: Availability Domain of the GPU Machine (1, 2 or 3)
+* GPU_SHAPE: Shape of the Compute Node (VM.GPU2.1, BM.GPU2.2,...)
 * INSTALLER_URL: URL of the installer of STAR-CCM+
 
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20">
