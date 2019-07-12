@@ -13,7 +13,7 @@ Running Simcenter STAR-CCM+ on Oracle Cloud Infrastructure is quite straightforw
 **Table of Contents**
 - [Introduction](#introduction)
 - [Architecture](#architecture)
-- [Deployment through Resource Manager](#deployment-through-resource-manager)
+- [Deployment through Resource Manager](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/ResourceManager.md#deployment-through-resource-manager)
 - [Deployment through Terraform Script](#deployment-through-terraform-script)
 - [Deployment via web console](#deployment-via-web-console)
 - [Installing STAR-CCM+](#installing-star-ccm)
