@@ -34,16 +34,6 @@ Deploying this architecture on OCI can be done in different ways.
 * [Terraform](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/terraform.md#terraform-installation) is a scripting language for deploying resources. It is the foundation of the Resource Manager, using it will be easier if you need to make modifications to the terraform stack often. 
 * The [web console](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/ManualDeployment.md#deployment-via-web-console) let you create each piece of the architecture one by one from a webbrowser. This can be used to avoid any terraform scripting or using existing templates. 
 
-# <img src="https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/raw/master/Images/STARCCM_logo.png" height="60"> Siemens Simcenter STAR-CCM+ Runbook
-
-
-# Running STAR-CCM+
-
-- [Running the Application](#running-the-application)
-- [Benchmark Example](#benchmark-example)
-
-
-
 # Running the Application
 Running Star-CCM+ is pretty straightforward: 
 You can either start the GUI if you have a VNC session started with 
