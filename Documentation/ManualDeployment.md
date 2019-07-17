@@ -26,6 +26,7 @@
   - [Connecting all compute node](#connecting-all-compute-node)
   - [Create a machinefile](#create-a-machinefile)
   - [Disable Hyperthreading](#disable-hyperthreading)
+  - [Installing STAR-CCM+](#installation)
 
 ## Log In
 You can start by logging in the Oracle Cloud console. If this is the first time, instructions to do so are available [here](https://docs.cloud.oracle.com/iaas/Content/GSG/Tasks/signingin.htm).
@@ -410,3 +411,22 @@ for i in {36..71}; do
    echo 0 | sudo tee /sys/devices/system/cpu/cpu${i}/online;
 done
 ```
+
+## Installing STAR-CCM+
+There are a couple of library that need to be added to the Oracle Linux image on the headnode and the compute nodes.
+
+```
+sudo yum -y install libSM libX11 libXext libXt
+```
+
+You can download the STAR-CCM+ installer from the Siemens PLM website or push it to your machine using scp. 
+`scp /path/own/machine/STAR-CCM_version.zip "opc@1.1.1.1:/home/opc/"`
+
+Without a VNC connection, a silent installation needs to be done. 
+
+```
+mkdir /mnt/share/install
+/path/own/machine/installscript.sh -i silent -DINSTALLDIR=/mnt/share/install/
+```
+
+If you would like to include the installation in the Resource Manager or terraform script. Unzip the files and edit the file hn-start-starccm.sh
