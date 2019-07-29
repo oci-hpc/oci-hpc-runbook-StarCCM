@@ -372,7 +372,7 @@ If you have used the terraform or Resource Manager approach, only the download a
 
 ## Connecting all compute node
 
-Each compute node needs to be able to talk to each compute node. SSH communication works but most applications have issues if all the hosts are not in the known host file. You can get all the nodes in your network using the CIDR block of your private subnet. 
+Each compute node needs to be able to talk to all the compute nodes. SSH communication works but most applications have issues if all the hosts are not in the known host file. You can get all the nodes in your network using the CIDR block of your private subnet.  
 
 ```
 sudo yum install -y nmap
