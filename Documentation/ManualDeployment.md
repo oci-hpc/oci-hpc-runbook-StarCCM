@@ -372,8 +372,7 @@ If you have used the terraform or Resource Manager approach, only the download a
 
 ## Connecting all compute node
 
-If you used terraform to create the cluster, this step has been done already. 
-Each compute node needs to be able to talk to each compute node. SSH communication works but RSM has some issue if you don't have each host in the known host file. You can compute it using the CIDR block of you private subnet. 
+Each compute node needs to be able to talk to each compute node. SSH communication works but most applications have issues if all the hosts are not in the known host file. You can get all the nodes in your network using the CIDR block of your private subnet. 
 
 ```
 sudo yum install -y nmap
