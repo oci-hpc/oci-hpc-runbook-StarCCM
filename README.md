@@ -34,24 +34,16 @@ Deploying this architecture on OCI can be done in different ways.
 * The [web console](https://github.com/oci-hpc/oci-hpc-runbook-Rocky/blob/master/Documentation/ManualDeployment.md#deployment-via-web-console) let you create each piece of the architecture one by one from a webbrowser. This can be used to avoid any terraform scripting or using existing templates. 
 
 # Running the Application
-Running Rocky as pretty straightforward: 
+Running Star-CCM+ is pretty straightforward: 
 You can either start the GUI if you have a VNC session started with 
 ```
-rockyHomeDir=/mnt/block/
-$rockyHomeDir/Rocky/rocky4/Rocky
+/mnt/share/install/version/STAR-CCM+version/star/bin/starccm+
 ```
+To run on multiple nodes, place the model.sim in `/mnt/share/work/` and replace the number of cores used in total as the np argument. 
 
-If you do not, you can run Rocky in batch mode:
-
-Example 1 use 2 GPUs for modelName
 ```
-$rockyHomeDir/Rocky/rocky4/Rocky --simulate modelName --resume 0 --use-gpu 1 --gpu-num=0 --gpu-num=1 
+/mnt/share/install/14.04.011/STAR-CCM+14.04.011/star/bin/starccm+ -batch -power -licpath 1999@flex.cd-adapco.com -podkey ++AaAaaaAAaAAAAAAAAAaa -np 106 -machinefile /mnt/share/install/machinelist.txt /mnt/share/work/model.sim
 ```
-Example 2 use 32 CPUs for modelName
-```
-$rockyHomeDir/Rocky/rocky4/Rocky --simulate modelName --resume 0 --use-gpu 0 -ncpus 32
-```
-
 
 # Benchmark Example
 <p align="center">
