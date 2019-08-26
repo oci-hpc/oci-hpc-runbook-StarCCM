@@ -68,9 +68,9 @@ Headnode:
 
 
 Compute nodes:
-* CLUSTER AVAILABILITY DOMAIN: Availability Domain of the headnode (1,2 or 3)
-* SHAPE OF THE HEADNODE: Shape of the Head Node which is also the Compute Node in our architecture (BM.GPU3.8)
-* VNC TYPE FOR THE HEADNODE: Visualization Type for the headnode: none, VNC or X11VNC
+* NUMBER OF COMPUTE NODES: How many compute nodes in the private network. This does not include the headnode
+* SHAPE OF THE COMPUTE NODES: Shape of the Compute Nodes
+* HYPERTHREADING: Turn hyperthreading On or Off. STAR-CCM+ performs usually better when it is turned off. 
 
 Visualization Nodes:
 * NUMBER OF VISUALIZATION NODES: Number of visualization machines for Pre/Post
