@@ -56,15 +56,47 @@ In the next window, copy the "PRE-AUTHENTICATED REQUEST URL" and keep it. You wi
 
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20"> and fill in the variables. 
 
-* AD: Availability Domain of the cluster (1,2 or 3)
-* COMPUTENODE_COUNT: Number of compute machines (Integer)
-* COMPUTE_SHAPE: Shape of the Compute Node (BM.HPC2.36)
-* HEADNODE_SHAPE: Shape of the Head Node which is also a Compute Node in our architecture (BM.HPC2.36)
-* GPUNODE_COUNT: Number of GPU machines for Pre/Post
-* GPUPASSWORD: password to use the VNC session on the Pre/Post Node
-* GPU_AD: Availability Domain of the GPU Machine (1, 2 or 3)
-* GPU_SHAPE: Shape of the Compute Node (VM.GPU2.1, BM.GPU2.2,...)
-* INSTALLER_URL: URL of the installer of STAR-CCM+
+
+## Select variables
+
+Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20"> and fill in the variables. 
+
+Headnode:
+* CLUSTER AVAILABILITY DOMAIN: Availability Domain of the headnode (1,2 or 3)
+* SHAPE OF THE HEADNODE: Shape of the Head Node which is also the Compute Node in our architecture (BM.GPU3.8)
+* VNC TYPE FOR THE HEADNODE: Visualization Type for the headnode: none, VNC or X11VNC
+
+
+Compute nodes:
+* CLUSTER AVAILABILITY DOMAIN: Availability Domain of the headnode (1,2 or 3)
+* SHAPE OF THE HEADNODE: Shape of the Head Node which is also the Compute Node in our architecture (BM.GPU3.8)
+* VNC TYPE FOR THE HEADNODE: Visualization Type for the headnode: none, VNC or X11VNC
+
+Visualization Nodes:
+* NUMBER OF VISUALIZATION NODES: Number of visualization machines for Pre/Post
+* PASSWORD FOR THE VNC SESSIONS: password to use the VNC session on the Pre/Post Node
+
+Visualization Nodes Options:
+* VNC TYPE FOR THE VISUALIZATION NODES: Visualization Type for the headnode: none, VNC or X11VNC
+* SHAPE OF THE VISUALIZATION NODES: Shape of the Visualization Node (VM.GPU2.1, BM.GPU2.2,...)
+* VISUALIZATION NODE AVAILABILITY DOMAIN: Availability Domain of the GPU Machine (1, 2 or 3)
+
+File Storage:
+* NVME SHARE DRIVE: Create a NFS shared drive from a NVMe disk on the headnode (Only available if headnode is BM.HPC2.36 or DENSE shapes)
+* BLOCK VOLUME SHARE DRIVE: Create a NFS shared drive from block storage. 
+* FSS: Create a FSS to be accessible from all nodes. 
+
+Block Options:
+* BLOCK VOLUME SIZE ( GB ): Size of the shared block volume
+
+FSS Options:
+* AVAILABILITY DOMAIN OF FSS: AD of the FSS mount
+
+STAR-CCM+:
+* URL TO DOWNLOAD STAR-CCM+: URL of the installer of STAR-CCM+ (Leave blank if you wish to download later)
+* URL TO DOWNLOAD A MODEL TARBALL: URL of the model you wish to run (Leave blank if you wish to download later)
+* SHARE DRIVE FOR THE INSTALLER: Drive on which the installer will be installed (NVMe, Block or FSS)
+* SHARE DRIVE FOR THE MODEL: Drive on which the installer will be installed (NVMe, Block or FSS)
 
 Click on <img src="https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/next.png" height="20">
 
