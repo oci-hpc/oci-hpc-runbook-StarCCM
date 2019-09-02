@@ -372,20 +372,17 @@ If you have used the terraform or Resource Manager approach, only the download a
 
 ## Connecting all compute node
 
-Each compute node needs to be able to talk to all the compute nodes. SSH communication works but most applications have issues if all the hosts are not in the known host file. You can get all the nodes in your network using the CIDR block of your private subnet.  
+
+Each compute node needs to be able to talk to all the compute nodes. SSH communication works but most applications have issues if all the hosts are not in the known host file. To disable the know host check for nodes with address in the VCN, you can deactivate with the following commands. You may need to modify it slightly if your have different addresses in your subnets. 
 
 ```
-sudo yum install -y nmap
-nmap -sn 10.0.3.0/24 | grep "scan report" | sed -e 's/.*(\(.*\)).*/\1/' > iplist.txt
+for i in 0 1 2 3
+do
+    echo Host 10.0.$i.* | sudo tee -a ~/.ssh/config
+    echo "    StrictHostKeyChecking no" | sudo tee -a ~/.ssh/config
+done
 ```
 
-Run those commands to download the script to register each node with all the other nodes.
-
-```
-wget https://github.com/oci-hpc/oci-hpc-runbook-HFSS/raw/master/scripts/generate_ssh_file.sh
-chmod 777 generate_ssh_file.sh
-./generate_ssh_file.sh
-```
 
 ## Create a machinefile
 
