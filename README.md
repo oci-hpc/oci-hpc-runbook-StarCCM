@@ -29,9 +29,9 @@ The architecture for this runbook is as follow, we have one main machine (The he
 # Deployment
 
 Deploying this architecture on OCI can be done in different ways.
-* The [resource Manager](https://github.com/oci-hpc/oci-hpc-runbook-Rocky/blob/master/Documentation/ResourceManager.md#deployment-through-resource-manager) let you deploy it from the console. Only relevant variables are shown but others can be changed in the zip file. 
-* [Terraform](https://github.com/oci-hpc/oci-hpc-runbook-Rocky/blob/master/Documentation/terraform.md#terraform-installation) is a scripting language for deploying resources. It is the foundation of the Resource Manager, using it will be easier if you need to make modifications to the terraform stack often. 
-* The [web console](https://github.com/oci-hpc/oci-hpc-runbook-Rocky/blob/master/Documentation/ManualDeployment.md#deployment-via-web-console) let you create each piece of the architecture one by one from a webbrowser. This can be used to avoid any terraform scripting or using existing templates. 
+* The [resource Manager](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/ResourceManager.md#deployment-through-resource-manager) let you deploy it from the console. Only relevant variables are shown but others can be changed in the zip file. 
+* [Terraform](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/terraform.md#deployment-through-terraform-script) is a scripting language for deploying resources. It is the foundation of the Resource Manager, using it will be easier if you need to make modifications to the terraform stack often. 
+* The [web console](https://github.com/oci-hpc/oci-hpc-runbook-StarCCM/blob/master/Documentation/ManualDeployment.md#deployment-via-web-console) let you create each piece of the architecture one by one from a webbrowser. This can be used to avoid any terraform scripting or using existing templates. 
 
 # Running the Application
 Running Star-CCM+ is pretty straightforward: 
