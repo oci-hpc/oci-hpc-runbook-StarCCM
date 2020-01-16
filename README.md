@@ -44,6 +44,46 @@ To run on multiple nodes, place the model.sim in `/mnt/share/work/` and replace 
 ```
 /mnt/share/install/14.04.011/STAR-CCM+14.04.011/star/bin/starccm+ -batch -power -licpath 1999@flex.cd-adapco.com -podkey ++AaAaaaAAaAAAAAAAAAaa -np 106 -machinefile /mnt/share/install/machinelist.txt /mnt/share/work/model.sim
 ```
+## MPI implementations and RDMA
+
+Performances can really differ depending on the MPI that you are using. 3 are supported by Star-CCM+ out of the box. 
+
+* IBM Platform MPI: Default or flag `platform`
+* Open MPI: Flag `intel`
+* Intel MPI: Flag `openmpi3`
+
+To specify options, you can use the flag `-mppflags`
+
+When using OCI RDMA on a Cluster Network, you will need to specify these options: 
+
+Platform: 
+For RDMA:
+```
+-intra=shm -e MPI_HASIC_UDAPL=ofa-v2-cma-roe-enp94s0f0 -UDAPL
+```
+For better performances:
+```
+-prot -aff:automatic:bandwidth
+```
+To pin on the first 36 threads:
+```
+
+```
+
+Intel: 
+For RDMA: 
+```
+-mppflags "-iface enp94s0f0 -genv I_MPI_FABRICS=shm:dapl -genv DAT_OVERRIDE=/etc/dat.conf -genv I_MPI_DAT_LIBRARY=/usr/lib64/libdat2.so -genv I_MPI_DAPL_PROVIDER=ofa-v2-cma-roe-enp94s0f0 -genv I_MPI_FALLBACK=0"
+```
+
+Additionaly, instead of disabling hyper-threading, you can also force the MPI to pin it on the first 36 cores:  
+```
+-genv I_MPI_PIN_PROCESSOR_LIST=0-33 -genv I_MPI_PROCESSOR_EXCLUDE_LIST=36-71
+```
+
+OpenMPI:
+
+
 
 # Benchmark Example
 <p align="center">
