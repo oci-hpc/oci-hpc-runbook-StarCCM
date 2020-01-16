@@ -56,7 +56,7 @@ To specify options, you can use the flag `-mppflags`
 
 When using OCI RDMA on a Cluster Network, you will need to specify these options: 
 
-Platform: 
+### Platform: 
 For RDMA:
 ```
 -intra=shm -e MPI_HASIC_UDAPL=ofa-v2-cma-roe-enp94s0f0 -UDAPL
@@ -70,7 +70,7 @@ To pin on the first 36 threads:
 
 ```
 
-Intel: 
+### Intel: 
 For RDMA: 
 ```
 -mppflags "-iface enp94s0f0 -genv I_MPI_FABRICS=shm:dapl -genv DAT_OVERRIDE=/etc/dat.conf -genv I_MPI_DAT_LIBRARY=/usr/lib64/libdat2.so -genv I_MPI_DAPL_PROVIDER=ofa-v2-cma-roe-enp94s0f0 -genv I_MPI_FALLBACK=0"
@@ -81,7 +81,7 @@ Additionaly, instead of disabling hyper-threading, you can also force the MPI to
 -genv I_MPI_PIN_PROCESSOR_LIST=0-33 -genv I_MPI_PROCESSOR_EXCLUDE_LIST=36-71
 ```
 
-OpenMPI:
+### OpenMPI:
 
 
 
