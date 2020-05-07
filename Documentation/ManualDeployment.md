@@ -318,6 +318,7 @@ sudo yum -y install tigervnc-server mesa-libGL
 sudo systemctl set-default graphical.target
 sudo cp /usr/lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:0.service
 sudo sed -i 's/<USER>/opc/g' /etc/systemd/system/vncserver@:0.service
+sudo sed -ie '/^ExecStart=/a PIDFile=/home/opc/.vnc/%H%i.pid' /etc/systemd/system/vncserver@:0.service
 sudo mkdir /home/opc/.vnc/
 sudo chown opc:opc /home/opc/.vnc
 echo "password" | vncpasswd -f > /home/opc/.vnc/passwd
