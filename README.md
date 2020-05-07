@@ -67,7 +67,7 @@ For better performances:
 ```
 To pin on the first 36 threads:
 ```
-
+-cpu_bind=MAP_CPU:0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 ,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
 ```
 
 ### Intel: 
@@ -82,7 +82,15 @@ Additionaly, instead of disabling hyper-threading, you can also force the MPI to
 ```
 
 ### OpenMPI:
+For RDMA: 
+```
+-mca btl self -x UCX_TLS=rc,self,sm -x HCOLL_ENABLE_MCAST_ALL=0 -mca coll_hcoll_enable 0 -x UCX_IB_TRAFFIC_CLASS=105 -x UCX_IB_GID_INDEX=3
+```
 
+Additionaly, instead of disabling hyper-threading, you can also force the MPI to pin it on the first 36 cores:  
+```
+--cpu-set 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
+```
 
 
 # Benchmark Example
