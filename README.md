@@ -71,16 +71,16 @@ Depending on your OS, you will want to go with a specific method. If the HPC Clu
 
 ## Creation of Cluster Network through Marketplace
 Marketplace holds applications and images that can be deployed with our infrastructure.  For customers that want to use Oracle Linux, an HPC Cluster Network image is available and can be launched from directly within marketplace.
-1.	Within marketplace, select Get App at the top right.
-2.	Select the OCI Region then click Sign In.
-3.	Verify the version of the HPC Cluster image and then select the Compartment where the cluster will be launched. Accept the terms and conditions, then Launch Stack.
+1.	Within marketplace, select *Get App* at the top right.
+2.	Select the OCI Region then click *Sign In*.
+3.	Verify the version of the HPC Cluster image and then select the *Compartment* where the cluster will be launched. Accept the terms and conditions, then *Launch Stack*.
 4.	Fill out the remaing details of the stack:
-a.	Select the desired AD for the compute shapes and the bastion.
-b.	Copy-paste your public ssh key
-c.	Type in the number of Compute instances for the cluster
-5.	Click Create.
-6.	Navigate to Terraform Actions then click Apply. This will launch the CN provisioning.
-7.	Wait until the job shows ‘Succeeded’ then navigate to Outputs to obtain the bastion and compute node private IP’s. 
+    1.	Select the desired *AD* for the compute shapes and the bastion.
+    2.	Copy-paste your public *ssh key*
+    3.	Type in the number of *Compute instances* for the cluster
+5.	Click *Create*.
+6.	Navigate to *Terraform Actions* then click *Apply*. This will launch the CN provisioning.
+7.	Wait until the job shows ‘Succeeded’ then navigate to *Outputs* to obtain the bastion and compute node private IP’s. 
 
 
 ## Creation of Cluster Network through Manual Configuration
@@ -214,7 +214,7 @@ systemctl enable gdm --now
         5.	Source Port Range: All
         6.	Destination Port Range: 5901
 
-Note: The standard VNC port is 5900 plus a display number (for example, 5901 for :1, 5902 for :2
+Note: The standard VNC port is 5900 plus a display number (for example, 5901 for :1, 5902 for :2)
 
 14.	Allow access in local firewall settings, as follows:
 ```
