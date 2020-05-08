@@ -27,8 +27,8 @@ Simcenter STAR-CCM+ is a complete multiphysics solution for the simulation of pr
     - [IntelMPI](#intelmpi)
     - [PlatformMPI](#platformmpi)
 - [Benchmark Example](#benchmark-example)
-- [17 Millions Cells](#17-millions-cells)
-- [105 Millions Cells](#105-millions-cells)
+  - [17 Millions Cells](#17-millions-cells)
+  - [105 Millions Cells](#105-millions-cells)
 
 
 # Architecture
