@@ -204,15 +204,15 @@ systemctl enable gdm --now
 /opt/TurboVNC/bin/vncserver -wm mate-session
 ```
 13.	If you want to access the VNC server directly without SSH forwarding, ensure that your security list allows connections on port 5901/tcp.
-  1.	In the Console, navigate to Networking then Virtual Cloud Networks.
-  2.	Select Subnets and then the public subnet.
-  3.	In the default security list, add an Ingress Rule with the following details:
-    1.	Stateless: No
-    2.	Source Type: CIDR
-    3.	Source CIDR: 0.0.0.0/0
-    4.	IP Protocol: TCP
-    5.	Source Port Range: All
-    6.	Destination Port Range: 5901
+    1.	In the Console, navigate to Networking then Virtual Cloud Networks.
+    2.	Select Subnets and then the public subnet.
+    3.	In the default security list, add an Ingress Rule with the following details:
+        1.	Stateless: No
+        2.	Source Type: CIDR
+        3.	Source CIDR: 0.0.0.0/0
+        4.	IP Protocol: TCP
+        5.	Source Port Range: All
+        6.	Destination Port Range: 5901
 Note: The standard VNC port is 5900 plus a display number (for example, 5901 for :1, 5902 for :2
 
 14.	Allow access in local firewall settings, as follows:
