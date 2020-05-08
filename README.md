@@ -122,10 +122,10 @@ chmod 600 /home/user/key
 ssh -i /home/user/key opc@ipaddress 
 ```
 
-#Configure Visualization
+# Configure Visualization
 HPC workloads often require visualization tools for scheduling, monitoring or analyzing the output of the simulations.  In these scenarios, it is often desired to create a GPU visualization node for optimal resolution and post processing. A GUI is not installed by default on OCI instances; however, one can be configured easily using VNC or X11 remote display protocol. The subsections below will walk through how to create a GPU visualization node in the public subnet using TurboVNC and OpenGL.
 
-##Setting Up a VNC on your bastion
+## Setting Up a VNC on your bastion
 By default, the only access to the Oracle Linux machine is through SSH in a console mode. If you want to see the graphical interface, you will need to set up a VNC connection. The following script will work for the default user opc. The password for the vnc session is set as "HPC_oci1" but it can be edited in the next set of commands.
 If you are not currently connected to the headnode via SSH, please do so as these commands need to be run on the headnode.
 ```
@@ -144,7 +144,7 @@ sudo systemctl start vncserver@:1.service
 sudo systemctl enable vncserver@:1.service
 ```
 
-##Add a GPU instance.
+## Add a GPU instance.
 The below steps are taken Using OpenGL to Enhance GPU Use cases on OCI - refer to the blog for more details. 
 1.	Within the Console, navigate to Compute then Instances.
 2.	Create a Compute Instance for the Visualization Node:
@@ -235,7 +235,7 @@ You can chose a VNC client that you prefer or use this guide to install on your 
 •	[MacOS/Windows - RealVNC](https://www.realvnc.com/en/connect/download/)
 
 
-#Installing STAR-CCM+
+# Installing STAR-CCM+
 There are a couple of library that need to be added to the Oracle Linux image on all the compute nodes.
 ```
 sudo yum -y install libSM libX11 libXext libXt
@@ -268,7 +268,7 @@ mkdir /mnt/nfs-share/install
 /path/installscript.sh -i silent -DINSTALLDIR=/mnt/nfs-share/install/
 ```
 
-#Running STAR-CCM+
+# Running STAR-CCM+
 Running Star-CCM+ is pretty straightforward: You can either start the GUI if you have a VNC session started with
 ```
 /mnt/share/install/version/STAR-CCM+version/star/bin/starccm+
@@ -283,7 +283,7 @@ To run on multiple nodes, place the model.sim on the nfs-share drive (Ex:/mnt/nf
 -licpath 1999@flex.cd-adapco.com -podkey PODKEY -np CORENUMBER 
 -machinefile machinefile /mnt/nfs-share/work/model.sim
 ```
-##MPI implementations and RDMA
+## MPI implementations and RDMA
 Performances can really differ depending on the MPI that you are using. 3 are supported by Star-CCM+ out of the box.
 *	IBM Platform MPI: Default or flag platform
 *	Open MPI: Flag intel
@@ -291,7 +291,7 @@ Performances can really differ depending on the MPI that you are using. 3 are su
 To specify options, you can use the flag -mppflags
 When using OCI RDMA on a Cluster Network, you will need to specify these options:
 
-###OpenMPI
+### OpenMPI
 For RDMA:
 ```
 -mca btl self -x UCX_TLS=rc,self,sm -x HCOLL_ENABLE_MCAST_ALL=0 -mca coll_hcoll_enable 0 -x UCX_IB_TRAFFIC_CLASS=105 -x UCX_IB_GID_INDEX=3 
@@ -300,7 +300,7 @@ Additionaly, instead of disabling hyper-threading, you can also force the MPI to
 ```
 --cpu-set 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
 ```
-###IntelMPI
+### IntelMPI
 For RDMA:
 ```
 -mppflags "-iface enp94s0f0 -genv I_MPI_FABRICS=shm:dapl -genv DAT_OVERRIDE=/etc/dat.conf -genv I_MPI_DAT_LIBRARY=/usr/lib64/libdat2.so -genv I_MPI_DAPL_PROVIDER=ofa-v2-cma-roe-enp94s0f0 -genv I_MPI_FALLBACK=0"
@@ -308,7 +308,7 @@ Additionaly, instead of disabling hyper-threading, you can also force the MPI to
 -genv I_MPI_PIN_PROCESSOR_LIST=0-33 -genv I_MPI_PROCESSOR_EXCLUDE_LIST=36-71
 ```
 
-###PlatformMPI
+### PlatformMPI
 For RDMA:
 ```
 -mppflags "-intra=shm -e MPI_HASIC_UDAPL=ofa-v2-cma-roe-enp94s0f0 -UDAPL"
