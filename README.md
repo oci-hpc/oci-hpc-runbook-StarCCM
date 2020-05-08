@@ -49,12 +49,12 @@ Cluster Networks are supported in the following regions.  In each case, we recom
 
 The above baseline infrastructure provides the following specifications:
 -	Networking
-   -	1 x 100 Gbps RDMA over converged ethernet (ROCE) v2
-   -	Latency as low as 1.5 µs
+    -	1 x 100 Gbps RDMA over converged ethernet (ROCE) v2
+    -	Latency as low as 1.5 µs
 -	HPC Compute Nodes (BM.HPC2.36)
-   -	6.4 TB Local NVME SSD storage per node
-   -	36 cores per node
-   -	384 GB memory per node
+    -	6.4 TB Local NVME SSD storage per node
+    -	36 cores per node
+    -	384 GB memory per node
 
 ## Optional Infrastructure
 ### Storage
