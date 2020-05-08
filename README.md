@@ -231,8 +231,8 @@ ssh -L 5901:127.0.0.1:5901 opc@public_ip
 ```
 You can now connect using any VNC viewer using localhost:N as VNC server and the password you set during the vnc installation.
 You can chose a VNC client that you prefer or use this guide to install on your local machine:
-•	[Windows - TigerVNC](https://github.com/TigerVNC/tigervnc/wiki/Setup-TigerVNC-server-%28Windows%29) 
-•	[MacOS/Windows - RealVNC](https://www.realvnc.com/en/connect/download/)
+*	[Windows - TigerVNC](https://github.com/TigerVNC/tigervnc/wiki/Setup-TigerVNC-server-%28Windows%29) 
+*	[MacOS/Windows - RealVNC](https://www.realvnc.com/en/connect/download/)
 
 
 # Installing STAR-CCM+
@@ -285,9 +285,9 @@ To run on multiple nodes, place the model.sim on the nfs-share drive (Ex:/mnt/nf
 ```
 ## MPI implementations and RDMA
 Performances can really differ depending on the MPI that you are using. 3 are supported by Star-CCM+ out of the box.
-*	IBM Platform MPI: Default or flag platform
-*	Open MPI: Flag intel
-*	Intel MPI: Flag openmpi3
+ *	IBM Platform MPI: Default or flag platform
+ *	Open MPI: Flag intel
+ *	Intel MPI: Flag openmpi3
 To specify options, you can use the flag -mppflags
 When using OCI RDMA on a Cluster Network, you will need to specify these options:
 
