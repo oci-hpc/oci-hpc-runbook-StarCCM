@@ -71,43 +71,42 @@ Depending on your OS, you will want to go with a specific method. If the HPC Clu
 
 ## Creation of Cluster Network through Marketplace
 Marketplace holds applications and images that can be deployed with our infrastructure.  For customers that want to use Oracle Linux, an HPC Cluster Network image is available and can be launched from directly within marketplace.
-1.	Within marketplace, select *Get App* at the top right.
-2.	Select the OCI Region then click *Sign In*.
-3.	Verify the version of the HPC Cluster image and then select the *Compartment* where the cluster will be launched. Accept the terms and conditions, then *Launch Stack*.
+1.	Within marketplace, select **Get App** at the top right.
+2.	Select the OCI Region then click **Sign In**.
+3.	Verify the version of the HPC Cluster image and then select the *Compartment* where the cluster will be launched. Accept the terms and conditions, then **Launch Stack**.
 4.	Fill out the remaing details of the stack:
-    1.	Select the desired *AD* for the compute shapes and the bastion.
-    2.	Copy-paste your public *ssh key*
-    3.	Type in the number of *Compute instances* for the cluster
-5.	Click *Create*.
-6.	Navigate to *Terraform Actions* then click *Apply*. This will launch the CN provisioning.
-7.	Wait until the job shows ‘Succeeded’ then navigate to *Outputs* to obtain the bastion and compute node private IP’s. 
+    1.	Select the desired **AD** for the compute shapes and the bastion.
+    2.	Copy-paste your public **ssh key**
+    3.	Type in the number of **Compute instances** for the cluster
+5.	Click **Create**.
+6.	Navigate to *Terraform Actions* then click **Apply**. This will launch the CN provisioning.
+7.	Wait until the job shows ‘Succeeded’ then navigate to **Outputs** to obtain the bastion and compute node private IP’s. 
 
 
 ## Creation of Cluster Network through Manual Configuration
 Marketplace holds applications and images that can be deployed with our infrastructure.  For customers that want to use Oracle Linux, you can manually create a cluster network as follows:
 1.	Select the OCI Region on the top right.
-2.	In the main menu, select Networking and Virtual Cloud Network
-3.	Click on Start VCN Wizard, and select VCN with Internet Connectivity
-4.	Choose and name, the right compartment, and use 172.16.0.0/16 as VCN CIDR, 172.16.0.0/24 for Public Subnet and 172.16.1.0/24 for Private Subnet
-5.	In the main menu, select Compute, Instances, then Create Instance
-6.	Change the Image and select the Oracle Image tab, select Oracle Linux 7 - HPC Cluster Networking Image
-7.	Select the Availability Domain in which you can spin up a BM.HPC2.36 instance
-8.	Change the shape to BM.HPC2.36 under Bare Metal and Specialty
+2.	In the main menu, select **Networking** and **Virtual Cloud Network**
+3.	Click on Start VCN Wizard, and select **VCN with Internet Connectivity**
+4.	Choose and name, the right compartment, and use 172.16.0.0/16 as **VCN CIDR**, 172.16.0.0/24 for Public Subnet and 172.16.1.0/24 for Private Subnet
+5.	In the main menu, select **Compute**, **Instances**, then **Create Instance**
+6.	Change the Image and select the **Oracle Image** tab, select **Oracle Linux 7 - HPC Cluster Networking Image**
+7.	Select the **Availability Domain** in which you can spin up a BM.HPC2.36 instance
+8.	Change the **shape** to BM.HPC2.36 under Bare Metal and Specialty
 9.	Select the VCN and the public subnet you created. 
 10.	Add a public key to connect to the instance. This key will be used on all compute instances. 
-11.	Once the machine is up, click on the created instance. Under More Actions, select Create Instance Configuration. You can now terminate the instance under More Actions. 
-12.	In the main menu, select Compute, then Cluster Networks
-13.	Click Create Cluster Network and fill in all the options. Use the VCN, private subnet and instance configuration that you just created. Select the AD in which you can launch BM.HPC2.36 instances. 
+11.	Once the machine is up, click on the created instance. Under **More Actions**, select **Create Instance Configuration**. You can now **terminate** the instance under **More Actions**. 
+12.	In the main menu, select **Compute**, then **Cluster Networks**
+13.	Click **Create Cluster Network** and fill in all the options. Use the VCN, private subnet and instance configuration that you just created. Select the AD in which you can launch BM.HPC2.36 instances. 
 14.	Launch the cluster network. 
-15.	While it is loading, create another instance under Main Menu, Compute and Instances.
+15.	While it is loading, create another instance under **Main Menu**, **Compute** and **Instances**.
 16.	Put it in the public subnet that was just created, using your public key and shape should be VM.Standard2.1 or similar. This will be the bastion that we will use to connect to the cluster. 
 17.	SCP the key to the cluster on the bastion at /home/opc/.ssh/cluster_key and copy it also to /home/opc/.ssh/id_rsa
-18.	Navigate to Compute then Instance Pools in the Console and collect all the IP addresses for the cluster network pool. 
 19.	Install the Provisioning Tool on the bastion via the following command:
 ```
 sudo rpm -Uvh https://objectstorage.us-ashburn-1.oraclecloud.com/n/hpc/b/rpms/o/oci-hpc-provision-20190905-63.7.2.x86_64.rpm
 ```
-20.	Gather the private IPs from the compute nodes. Either from the Instances on the console, or using 
+18.	Navigate to **Compute** then **Instance Pools** in the Console and collect all the IP addresses for the cluster network pool. Or use this command on the bastion if you have nothing else running on your private subnet. 
 ```
 for i in `nmap -sL Private_Subnet_CIDR | grep "Nmap scan report for" | grep ")" | awk '{print $6}'`;do echo ${i:1:-1} >> /tmp/ips; done
 ```
