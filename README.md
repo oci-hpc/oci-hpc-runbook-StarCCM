@@ -63,7 +63,7 @@ On top of the NVME SSD storage that comes with the HPC shape, you can also attac
 You can create a visualizer node, such as a GPU VM or BM machine, depending on your requirements. This visualizer node can be your bastion host or else it can be separate.  Depending on the security requirements for the workload, the visualizer node can be placed in the private or public subnet.
 
 
-#Launch Cluster Network Steps 
+# Launch Cluster Network Steps 
 There are many ways to launch an HPC Cluster Network, this solutions guide will cover two different methods:
 *	Via Marketplace
 *	Manually
