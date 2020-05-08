@@ -213,6 +213,7 @@ systemctl enable gdm --now
         4.	IP Protocol: TCP
         5.	Source Port Range: All
         6.	Destination Port Range: 5901
+
 Note: The standard VNC port is 5900 plus a display number (for example, 5901 for :1, 5902 for :2
 
 14.	Allow access in local firewall settings, as follows:
