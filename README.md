@@ -45,7 +45,7 @@ Cluster Networks are supported in the following regions.  In each case, we recom
   *	Bastion Host in a Public Subnet
   *	HPC Compute Nodes in Private Subnet
 
-![](https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/HPC_arch_draft.png "GPU Architecture for Running HFSS in OCI")
+![](https://github.com/oci-hpc/oci-hpc-runbook-shared/blob/master/images/arch.png "Architecture for Running StarCCM+ in OCI")
 
 The above baseline infrastructure provides the following specifications:
 *	Networking
