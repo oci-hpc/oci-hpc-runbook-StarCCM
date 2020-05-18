@@ -21,6 +21,9 @@ Simcenter STAR-CCM+ is a complete multiphysics solution for the simulation of pr
   - [Add a GPU instance](#add-a-gpu-instance)
 - [Accessing a VNC](#accessing-a-vnc)
 - [Installing Star-CCM+](#installing-star-ccm)
+  - [Adding specific librairies](#adding-specific-librairies)
+  - [Download the binaries](#download-the-binaries)
+  - [Install](#install)
 - [Running Star-CCM+](#running-star-ccm)
   - [MPI Implementations and RDMA](#mpi-implementations-and-rdma)
     - [OpenMPI](#openmpi)
@@ -71,6 +74,8 @@ Depending on your OS, you will want to go with a specific method. If the HPC Clu
 
 ## Creation of Cluster Network through Marketplace
 Marketplace holds applications and images that can be deployed with our infrastructure.  For customers that want to use Oracle Linux, an HPC Cluster Network image is available and can be launched from directly within marketplace.
+We suggest launching the [CFD Ready Cluster](https://cloudmarketplace.oracle.com/marketplace/en_US/listing/75645211) that will contain librairies needed for CFD.
+
 1.	Within marketplace, select **Get App** at the top right.
 2.	Select the OCI Region then click **Sign In**.
 3.	Verify the version of the HPC Cluster image and then select the *Compartment* where the cluster will be launched. Accept the terms and conditions, then **Launch Stack**.
@@ -78,6 +83,8 @@ Marketplace holds applications and images that can be deployed with our infrastr
     1.	Select the desired **AD** for the compute shapes and the bastion.
     2.	Copy-paste your public **ssh key**
     3.	Type in the number of **Compute instances** for the cluster
+    4. Uncheck Install OpenFOAM
+    5. If you need more than 6TB of Shared disk space, check GlusterFS and select how many servers you would need. (6TB per server)
 5.	Click **Create**.
 6.	Navigate to *Terraform Actions* then click **Apply**. This will launch the CN provisioning.
 7.	Wait until the job shows ‘Succeeded’ then navigate to **Outputs** to obtain the bastion and compute node private IP’s. 
@@ -238,12 +245,15 @@ You can chose a VNC client that you prefer or use this guide to install on your 
 *	[Windows - TigerVNC](https://github.com/TigerVNC/tigervnc/wiki/Setup-TigerVNC-server-%28Windows%29) 
 *	[MacOS/Windows - RealVNC](https://www.realvnc.com/en/connect/download/)
 
-
 # Installing STAR-CCM+
+
+## Adding specific librairies
+***If you used the CFD Ready Cluster from marketplace, this step is not needed.***
 There are a couple of library that need to be added to the Oracle Linux image on all the compute nodes.
 ```
 sudo yum -y install libSM libX11 libXext libXt
 ```
+## Download the binaries
 You can download the STAR-CCM+ installer from the Siemens PLM website or push it to your machine using scp. 
 ```
 scp /path/own/machine/STAR-CCM_version.zip opc@1.1.1.1:/home/opc/
@@ -266,6 +276,7 @@ Untar or unzip the installer depending on your version
 tar -xf installer.tgz
 unzip installer.tgz
 ```
+## Install
 Launch the installer on a shared location. By default, an HPC cluster has a NFS-share mounted on all the compute nodes. 
 ```
 mkdir /mnt/nfs-share/install
