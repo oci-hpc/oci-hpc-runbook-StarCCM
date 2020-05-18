@@ -249,6 +249,7 @@ You can chose a VNC client that you prefer or use this guide to install on your 
 
 ## Adding specific librairies
 ***If you used the CFD Ready Cluster from marketplace, this step is not needed.***
+
 There are a couple of library that need to be added to the Oracle Linux image on all the compute nodes.
 ```
 sudo yum -y install libSM libX11 libXext libXt
